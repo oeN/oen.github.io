@@ -1,0 +1,39 @@
+baseURL: "https://diomedet.com/"
+languageCode: "en-us"
+title: "Diomede T."
+theme: "PaperMod"
+
+# example config https://github.com/adityatelange/hugo-PaperMod/blob/exampleSite/config.yml#L106
+
+languages:
+  en:
+    menu:
+      main:
+        - name: About Me
+          url: about
+        - name: Posts
+          url: posts
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+params:
+  author: "Diomede"
+  disableThemeToggle: true
+  ShowReadingTime: true
+
+  homeInfoParams:
+    Title: "Hello Everyone!"
+    Content: >
+      Welcome to my site, I'm Diomede!
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/oeN"
+    - name: twitter
+      url: "https://twitter.com/diomedet"
+    - name: RSS
+      url: "index.xml"

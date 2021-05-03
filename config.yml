@@ -37,3 +37,14 @@ params:
       url: "https://twitter.com/diomedet"
     - name: RSS
       url: "index.xml"
+  
+  profileMode:
+    enabled: true
+    imageUrl: /imgs/avatar.jpg
+    imageTitle: Me
+    title: Hello There!
+    buttons:
+      - name: About Me
+        url: "/about"
+      - name: Posts
+        url: "/posts"

@@ -2,6 +2,11 @@
 title: "Expose an external resource with a Kubernetes Ingress"
 date: 2021-05-02T21:50:31+02:00
 draft: false
+tags:
+- kubernetes
+- k8s
+- homelab
+- home-assistant 
 ---
 
 The other night I was wandering around my homelab and noticed that my new home assistant instance wasn't properly exposed to the internet. Some months ago home assistant (from now on HA) found its new permanent home, a Rasperry PI 4 4GB; since we're in lockdown I didn't need to reach HA outside my local network.

@@ -24,6 +24,12 @@ params:
   author: "Diomede"
   disableThemeToggle: true
   ShowReadingTime: true
+  ShowShareButtons: true
+
+  editPost:
+    URL: "https://github.com/oeN/oen.github.io/blob/master/content"
+    Text: "Suggest Changes" # edit text
+    appendFilePath: true # to append file path to Edit link
 
   homeInfoParams:
     Title: "Hello Everyone!"

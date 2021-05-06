@@ -20,3 +20,6 @@ Messing around with the interface of PiHole, I've noticed that under "Settings -
 So, the idea is to create a custom DNS server that can be update by **external-dns** and used by PiHole as an **upstream DNS server**, in this way every ingress with my domain of choice, inside my local network, will be resolved to the IP of my kubernetes cluster.
 
 Great, we've a plan, now it's time to make it real!
+
+<!-- # TODO: talk about the difficulties with CoreDNS and etcd -->
+<!-- # TODO: explain that at the moment there is no SSL but it will be added in the future -->

@@ -19,7 +19,7 @@ It could seem a little odd, but hear me out:
 - I'm planning to move some service into the cluster and they'll need to reach HA anyway
 - I want to learn as much as I can about Kubernetes and this seemed a good chance
 
-So, in order to achieve my goal, I basically need one thing how I can point a Kubernetes Service to an external resource?
+So, in order to achieve my goal, I basically need one thing: how I can point a Kubernetes Service to an external resource?
 
 Wait, why a Service? Didn't you mention an Ingress before? Yes, you're right but bear with me.
 

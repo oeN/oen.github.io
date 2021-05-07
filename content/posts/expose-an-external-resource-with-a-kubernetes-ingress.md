@@ -68,7 +68,7 @@ spec:
   clusterIP: None
 ```
 
-Note: we set the clusterIP property to None on purpose, this tells Kubernetes to not provide an IP to this Service, we don't need it. A Service like this is know also as headless service.
+Note: we set the clusterIP property to None on purpose, this tells Kubernetes to not provide an IP to this Service, we don't need it. A Service like this is known also as headless service.
 
 _ingress.yml_
 

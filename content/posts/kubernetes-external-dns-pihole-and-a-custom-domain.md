@@ -436,7 +436,7 @@ Do you remember the `forward` value that we set on the `values.yaml` for **CoreD
 
 That option has become the only way to choose which DNS server we want to use to solve all the DNS requests that can't be solved internally and aren't blocked by Pi-hole. This is because if we check some of the "Upstream DNS Server", we'll lose the ability to resolve our internal domain.
 
-I have some ideas on how to do that:
+I have some ideas on how to solve that:
 
 - A second Pi-hole that is going to be my "Custom 2" upstream DNS Server
 - An ingress that masks the IP of the DNS server I want to use, something like I've done in a previous post [Expose an external resource with a Kubernetes Ingress](https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/). A mask is needed because if you insert `8.8.8.8` into the "Custom 2" field, Pi-hole will automatically check the Google server for you.

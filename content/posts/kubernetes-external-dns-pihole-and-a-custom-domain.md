@@ -4,37 +4,37 @@ date: 2021-05-06T21:17:56+02:00
 draft: true
 ---
 
-During these days I'm tiding up my homelab and found the neccesity of having an internal domain to expose some apps inside my local network but not to the internet.
+During these days I'm tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.
 
 For example, I use [Vault](https://www.vaultproject.io/) to store secrets and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) but if I use my domain `diomedet.com` it will be exposed to the whole internet and I don't want that.
 
 [external-dns](https://github.com/kubernetes-sigs/external-dns) is my tool of choice to handle the synchronization between my Ingresses and the DNS provider; on my local network I use [Pi-hole](https://pi-hole.net/) to filter all my DNS request and to block some of them.
 
-Pi-hole already have a "Local DNS Records" section where you could list an arbitrary domain and point it to a specific IP inside or outside your network.
+Pi-hole already has a "Local DNS Records" section where you could list an arbitrary domain and point it to a specific IP inside or outside your network.
 So, if there is a way to make **external-dns** updates that list, what I'm trying to achieve, it would be possible with a little effort. Unfortunately, at the moment of writing, there is no way to update the list of local DNS records on Pi-hole programmatically, so we've to find another way to do that.
 
-Messing around with the interface of Pi-hole, I've noticed that under "Settings -> DNS" you can choose to which DNS server redirect all the incoming requests that hasn't be blocket by the blacklist and besides the classic list of "Upstream DNS Servers" there is also a list of custom upstream DNS servers:
+Messing around with the interface of Pi-hole, I've noticed that under "Settings -> DNS" you can choose to which DNS server redirect all the incoming requests that haven't be blocked by the blacklist and besides the classic list of "Upstream DNS Servers" there is also a list of custom upstream DNS servers:
 
 ![Pi-hole DNS Settings](/imgs/posts/kubernetes-external-dns-pihole/pihole-dns.png) 
 
-So, the idea is to create a custom DNS server that can be update by **external-dns** and used by Pi-hole as an **upstream DNS server**. In this way every ingress with my internal domain will be resolved to the IP of my kubernetes cluster.
+So, the idea is to create a custom DNS server that can be updated by **external-dns** and used by Pi-hole as an **upstream DNS server**. In this way, every ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.
 
-Great, we've a plan, now it's time to make it real!
+Great, we've got a plan, now it's time to make it real!
 
 ## First things first, we need a DNS server
 
 Scouting between the providers supported by **external-dns** there a bunch of choices that can be self-hosted, something like [PowerDNS](https://www.powerdns.com/) or [CoreDNS](https://coredns.io/), at this point I was like: 
-> "mmh interesting, CoreDNS is the one used by kubernetes internally must be a good choice, let's go with it"
+> "mmh interesting, CoreDNS is the one used by Kubernetes internally must be a good choice, let's go with it"
 
-A collegue of mine suggested to use **PowerDNS** but I was already set on my path, so I sticked with **CoreDNS**.
+A colleague of mine suggested using PowerDNS** but I was already set on my path, so I stuck with **CoreDNS**.
 
 To be clear, it's not a bad choice, but might be a little overkill for this specific purpose but let's see what were the difficulties that this path reserved for us.
 
-In the **external-dns** repo there is a folder `docs/tutorial` with a markdown file for each supported provider (I think each, didn't counted), we're looking for the CoreDNS one: [https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md)
+In the **external-dns** repo there is a folder `docs/tutorial` with a markdown file for each supported provider (I think each, didn't count), we're looking for the CoreDNS one: [https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md)
 
-Is a tutorial for minikube, but ignoring that part, can be used for every kubernetes cluster and bonus point, show us even how to install **CoreDNS**, great two birds with one stone.
+Is a tutorial for minikube, but ignoring that part, can be used for every Kubernetes cluster and bonus point, show us even how to install **CoreDNS**, great two birds with one stone.
 
-If you've opened the file you can see from the very beggining that the birds are not two anymore but three, the more the merrier right, right?!
+If you've opened the file you can see from the very beginning that the birds are not two anymore but three, the more the merrier right, right?!
 
 If you haven't opened the link, let me recap that for you what we need to install:
 - CoreDNS (obviously)
@@ -45,19 +45,19 @@ If you haven't opened the link, let me recap that for you what we need to instal
 
 This is the way how **external-dns** talks to **CoreDNS**, we have to create a section in the configuration of CoreDNS that tells him to read the value from a certain path on the **etcd** instance we're going to configure and external-dns will update the same path with the information about the Ingresses we're going to create with our internal domain.
 
-**Note:** Before swtiching to **etcd** directly, **CoreDNS** was using [SkyDNS](https://github.com/skynetservices/skydns) (a service built on top of etcd) to serve these kind of request, so, in the manifest files we're going to see you'll find some refuse of that implementation.
+**Note:** Before switching to **etcd** directly, **CoreDNS** was using [SkyDNS](https://github.com/skynetservices/skydns) (a service built on top of etcd) to serve these kinds of request, so, in the manifest files we're going to see you'll find some refuse of that implementation.
 
 ## Install etcd
 
-Let's get down to business and install **etcd**, in the end is a core component of kubernetes there nothing wrong learning more about it.
+Let's get down to business and install **etcd**, in the end, is a core component of Kubernetes there nothing wrong with learning more about it.
 Just to let you know, don't use the internal **etcd** for a user application (like the one we want to install here), is not meant for that.
 
-The tutorial linked above suggest us to use the [etcd-operator](https://github.com/coreos/etcd-operator) and use [https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml](https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml) to create our etcd cluster.
-> Great, an operator nothing more simplier than that...
+The tutorial linked above suggests we use the [etcd-operator](https://github.com/coreos/etcd-operator) and use [https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml](https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml) to create our etcd cluster.
+> Great, an operator nothing more simple than that...
 
 Slow down, the `etcd-operator` repo has been archived more than a year ago, even if for a case like this it could work we don't want to install an operator that is not maintained anymore, so let's see how to manually deploy it.
 
-After searching around I ended up on this documentation page [https://etcd.io/docs/v3.4/op-guide/container/#docker](https://etcd.io/docs/v3.4/op-guide/container/#docker) that shows how to deploy etcd with a single node configuration, prefect is what we need here.
+After searching around I ended up on this documentation page [https://etcd.io/docs/v3.4/op-guide/container/#docker](https://etcd.io/docs/v3.4/op-guide/container/#docker) that shows how to deploy etcd with a single node configuration; prefect is what we need here.
 
 Basically we need to port the command showed in the link in a manifest for kubernetes:
 
@@ -136,9 +136,9 @@ spec:
             storage: 1Gi # we don't need much space to store DNS information
 ```
 
-We're going to use a `StatefulSet` because `etcd` is a stateful app and needs a volume to persist its data. Rather than the classic `Deploy` with a `StatefulSet` we're certain tha the generated pod will receive always the same name and the volume attached to it will always be the same. [More on the StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
+We're going to use a `StatefulSet` because `etcd` is a stateful app and needs a volume to persist its data. Rather than the classic `Deploy` with a `StatefulSet` we're certain that the generated pod will receive always the same name and the volume attached to it will always be the same. [More on the StatefulSet](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
 
-The only noticeable difference between the `docker run ...` command and this manifest files is that we're using environmnet variables instead of configuration flags. I had some trouble getting the flags working and I like more the environment variables, anyway here a list of [etcd configuration flags](https://etcd.io/docs/v3.4/op-guide/configuration/) with the matching variable.
+The only noticeable difference between the `docker run ...` command and this manifest file is that we're using environment variables instead of configuration flags. I had some trouble getting the flags working and I like more the environment variables, anyway here a list of [etcd configuration flags](https://etcd.io/docs/v3.4/op-guide/configuration/) with the matching variable.
 
 Now, in order to expose `etcd` to the other applications in the cluster we need to create a `Service` too:
 
@@ -162,7 +162,7 @@ spec:
     app.kubernetes.io/name: etcd
 ```
 
-Nothing special here, but this complete the manifest needed for our etcd instance.
+Nothing special here, but this completes the manifest needed for our etcd instance.
 
 ## Install CoreDNS
 
@@ -173,11 +173,11 @@ Since my homelab is a way to learn more about Kubernetes, I choose to render the
 Whichever way you choose, the important part is to set correctly a couple of option inside the `values.yml` file.
 
 ```yaml
-# if you don't have RBAC enabled on you cluster I think you can set this to false
+# if you don't have RBAC enabled on your cluster I think you can set this to false
 rbac:
   create: true
 
-# isClusterService specifies whether chart should be deployed as cluster-service or normal k8s app.
+# isClusterService specifies whether the chart should be deployed as cluster-service or normal k8s app.
 isClusterService: true
 
 servers:
@@ -199,13 +199,13 @@ servers:
 
 The most important part is the last one, we're going to configure the `etcd` plugin and tell **CoreDNS** to look inside the `http://etcd:2379` to find the information about the domain `diomedet.internal` (this is my internal domain)
 
-Also the `forward` part is important, it tells to CoreDNS where to redirect all the DNS that it can't solve, later on I'll explain why is important.
+Also the `forward` part is important, it tells CoreDNS where to redirect all the DNS that it can't solve, later on, I'll explain why is important.
 
-With these values we can run the command 
+With these values, we can run the command 
 
 `helm template custom coredns/coredns --output-dir . --values values.yaml`
 
-(custom is the name of my release, tha it'll turns out in `custom-coredns`)
+(custom is the name of my release, then it'll turn out in `custom-coredns`)
 
 This will create a folder `coredns/template` with 5 files in it:
 
@@ -218,10 +218,10 @@ coredns/templates
 └── service.yaml
 ```
 
-Now the only thing we've to do is to `kubectl apply` these files and we'll end up with a working CoreDNS instance. Working but still not reachable outside the cluster, if you have [MetalLB](https://metallb.universe.tf/) configured you can change the `Service` type from `ClusterIP` to `LoadBalancer` in order to get an IP.
+Now the only thing we've to do is to `kubectl apply` these files and we'll end up with a working CoreDNS instance. Working but still not reachable outside the cluster, if you have [MetalLB](https://metallb.universe.tf/) configured you can change the `Service` type from `ClusterIP` to `LoadBalancer` to get an IP.
 I haven't this feature in my cluster yet, so for now I'm going to use the `NodePort` type, this allows me to use a port of my node and point it to the service.
 
-With `kustomize` there is the concept of patch, so I can create a patch that is going to modify the `service.yaml` file without directly touching it. I prefer this way, so if I have to re-run `helm template ...` I don't have to mind any modification I could possibly have made, because everything is applied with a patch.
+With `kustomize` there is the concept of patches, so I can create a patch that is going to modify the `service.yaml` file without directly touching it. I prefer this way, so if I have to re-run `helm template ...` I don't have to mind any modification I could have made, because everything is applied with a patch.
 
 `patches/service.yaml`
 
@@ -237,7 +237,7 @@ spec:
   - {port: 53, protocol: TCP, name: tcp-53, nodePort: 30053}
 ```
 
-Here I tell to use the port `30053` for both `UDP` and `TCP`. With the `NodePort` you can use port from 30000 to 32767 if you do not modify it.
+Here I tell Kubernetes to use the port `30053` for both `UDP` and `TCP`. With the `NodePort` you can use ports from 30000 to 32767 if you do not modify it.
 
 To wrap it up, here my `kustomization.yml` file:
 
@@ -257,11 +257,11 @@ patchesStrategicMerge:
 - patches/service.yaml
 ```
 
-If you followed my path you should have all the files to make it work, anyway if you've installed the helm chart directly you can always change the service manifest directly on kubernetes. You can even set the `serviceType` in the `values.yaml` file but I didn't find a way to specify the `nodePort` to use so I decided to go with the patch.
+If you followed my path you should have all the files to make it work, anyway if you've installed the helm chart directly you can always change the service manifest directly on Kubernetes. You can even set the `serviceType` in the `values.yaml` file but I didn't find a way to specify the `nodePort` to use so I decided to go with the patch.
 
 ## Finally, install external-dns
 
-Now we can finally install the instance of **external-dns** that is going to monitor the `Ingress` created with out internal domain.
+Now we can finally install the instance of **external-dns** that is going to monitor the `Ingress` created with our internal domain.
 
 I have RBAC enabled on my cluster, so my manifest look like this:
 
@@ -333,7 +333,7 @@ spec:
 
 If you don't have RBAC enable you can just use only the `Deployment` manifest.
 
-This is the simpliest part, just set the correct `ETCD_URLS` with the correct value and you're done. I have deployed my **external-dns** in a namespace different than **etcd**, so in the `ETCD_URLS` variable I have to specify the service with the namespace too `http://etcd.custom-coredns:2379`
+This is the simplest part, just set the correct `ETCD_URLS` with the correct value and you're done. I have deployed my **external-dns** in a namespace different than **etcd**, so in the `ETCD_URLS` variable I have to specify the service with the namespace too `http://etcd.custom-coredns:2379`
 
 Once you applied your manifest you can create an ingress with the internal domain you chose, in my case is something like:
 
@@ -357,11 +357,11 @@ spec:
         path: /
 ```
 
-After you create an ingress with your internal domain on the external-dns pod you should see a log line like the following one:
+After you create an Ingress with your internal domain on the external-dns pod you should see a log like the following one:
 
 `level=debug msg="Endpoints generated from ingress: vault/vault-ui-internal: [vault.diomedet.internal 0 IN A  10.10.5.123 []]"`
 
-`10.10.5.123` is the IP address of my kubernetes cluster, it's called "Scyther", the Pokédex number of Scyther is #123, so here explained my IP, not that you asked but here it is anyway :P
+`10.10.5.123` is the IP address of my Kubernetes cluster, it's called "Scyther", the Pokédex number of Scyther is #123, so here explained my IP, not that you asked but here it is anyway :P
 
 Now if I use `dig` to check the name resolution, it should work correctly:
 ```bash
@@ -390,7 +390,7 @@ vault.diomedet.internal. 30     IN      A       10.10.5.123
 ;; MSG SIZE  rcvd: 103
 ```
 
-But if I run the `nslookup` command I stil get an error:
+But if I run the `nslookup` command I still get an error:
 
 ```bash
 ❯ nslookup vault.diomedet.internal
@@ -424,19 +424,19 @@ Great! Now we can create as many Ingress with our internal domain as we want and
 
 ## Conclusion
 
-Unfortunatly in this scenario our instance of **CoreDNS** will become a central point for our network, if something happens to our cluster or the CoreDNS pod stops, we'll loose the ability to resolve domain names. I'm still searching a way to solve this problem and have a more relaiable solution but for now I have to stick with this downside.
+Unfortunately in this scenario our instance of **CoreDNS** will become a central point for our network, if something happens to our cluster or the CoreDNS pod stops, we'll lose the ability to resolve domain names. I'm still searching for a way to solve this problem and have a more reliable solution but for now, I have to stick with this downside.
 
 Do you remember the `forward` value that we set on the `values.yaml` for **CoreDNS**?
 
-That option has become the only way to choose which DNS server we want to use in order to solve all the DNS requests that can't be solved internally and aren't blocked by Pi-hole, this is because if we check some of the "Upstream DNS Server" we'll loose the ability to resolve our internal domain.
+That option has become the only way to choose which DNS server we want to use to solve all the DNS requests that can't be solved internally and aren't blocked by Pi-hole, this is because if we check some of the "Upstream DNS Server" we'll lose the ability to resolve our internal domain.
 
-I have some ideas how to do that:
+I have some ideas on how to do that:
 
 - A second Pi-hole that is going to be my "Custom 2" upstream DNS Server
-- An ingress that mask the IP of the DNS Server I want to use, something like I've done in a previous post [Expose an external resource with a Kubernetes Ingress](https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/)
+- An ingress that mask the IP of the DNS server I want to use, something like I've done in a previous post [Expose an external resource with a Kubernetes Ingress](https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/)
 
 But I haven't tested any of that, so, for today this is it.
 
-I'm looking also for way to have a certificate on my internal domain, so I don't get thoose annoying alerts when I'm trying to access my apps via `https`
+I'm looking also for a way to have a certificate on my internal domain, so I don't get those annoying alerts when I'm trying to access my apps via `HTTPS`
 
-I hope you've found this article useful and stay tuned for future updates!
+I hope you've found this article useful, stay tuned for future updates!

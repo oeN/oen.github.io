@@ -1,7 +1,13 @@
 ---
 title: "Kubernetes, external-dns, Pi-hole and a custom domain"
 date: 2021-05-06T21:17:56+02:00
-draft: true
+draft: false
+tags:
+- kubernetes
+- k8s
+- homelab
+- pi-hole
+- dns
 ---
 
 During these days, I'm tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.

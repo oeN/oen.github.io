@@ -439,7 +439,7 @@ That option has become the only way to choose which DNS server we want to use to
 I have some ideas on how to do that:
 
 - A second Pi-hole that is going to be my "Custom 2" upstream DNS Server
-- An ingress that mask the IP of the DNS server I want to use, something like I've done in a previous post [Expose an external resource with a Kubernetes Ingress](https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/)
+- An ingress that masks the IP of the DNS server I want to use, something like I've done in a previous post [Expose an external resource with a Kubernetes Ingress](https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/). A mask is needed because if you insert `8.8.8.8` into the "Custom 2" field, Pi-hole will automatically check the Google server for you.
 
 But I haven't tested any of that, so, for today, this is it.
 

@@ -1,5 +1,6 @@
 ---
 title: "Note-taking is simple, right?!"
+date: 2021-05-21T21:17:56+02:00
 draft: false
 tags:
 - notes
@@ -7,7 +8,7 @@ tags:
 - productivity
 ---
 
-TL;DR: Try [Obsidian.md](https://obsidian.md/), is great!
+**TL;DR**: Try [Obsidian.md](https://obsidian.md/), is great!
 
 In the past years, I found myself in need of some program that allows me to take notes just to remember things or to store some thoughts I have in that specific moment. When I was younger, I never minded too much where I wrote those notes. I thought that just the fact I wrote them would be enough to remember them, silly me...
 

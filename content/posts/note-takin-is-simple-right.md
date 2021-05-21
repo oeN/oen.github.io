@@ -1,6 +1,6 @@
 ---
 title: "Note-taking is simple, right?!"
-date: 2021-05-21T21:17:56+02:00
+date: 2021-05-21T21:01:56+02:00
 draft: false
 tags:
 - notes

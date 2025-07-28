@@ -1,5 +1,7 @@
 ---
 title: "Note-taking is simple, right?!"
+# to keep the old link
+permalink: /posts/note-takin-is-simple-right/
 date: 2021-05-21T21:01:56+02:00
 draft: false
 tags:
@@ -43,7 +45,7 @@ I've used **Foam** for some months, at first, it was really great, the graph vie
 
 Everything was great until I decided to organize my notes in folders. Technically you don't need folders; with the link system, you can have everything in one place without getting lost, but I wanted them anyway. After organizing my notes in folders, I had to update the links. Creating new notes in that folder led to link outside of it that led to duplicated files of some notes that led to a little mess in my filesystem. Those problems should be solved right now, but the magic, for me, was broken **Foam** is cool, but it tries to use VSCode for something that is not built for or at least not entirely.
 
-Aaand I'm lost again, so I talked to the future me: 
+Aaand I'm lost again, so I talked to the future me:
 > You're not going to buy new games every month and let them rot in your Steam library; we're going to spent 15$/month on Roam!
 
 Once again, I've started with the goal; this will be my "Second Brain" I'll feed him so well that it will throw back at me ideas at a rate I can not keep up. Note, link, note, link, another link, link everything!! muahahahah!!

@@ -1,12 +1,13 @@
 ---
 title: "Expose an external resource with a Kubernetes Ingress"
 date: 2021-05-02T21:50:31+02:00
+permalink: /posts/expose-an-external-resource-with-a-kubernetes-ingress/
 draft: false
 tags:
 - kubernetes
 - k8s
 - homelab
-- home-assistant 
+- home-assistant
 ---
 
 The other night I was wandering around my homelab and noticed that I didn't correctly expose my new home assistant instance to the internet. Some months ago, home assistant (from now on HA) found its new permanent home, a Rasperry PI 4 4GB; since we're in lockdown, I didn't need to reach HA outside my local network.
@@ -99,4 +100,4 @@ Now, if we run `kubectl apply -f ...` for all these three files after cert-manag
 
 And remember that I told you that I want to move some service that uses HA inside my k8s cluster? Now, all I have to do is deploy them and use `home-assistant as the URL for HA instead of using the IP address.
 
-For the sake of completion, if you already have a local domain for your HA instance, you can skip the creation of the Endpoint and use the [Service's `externalName` property](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) directly. 
+For the sake of completion, if you already have a local domain for your HA instance, you can skip the creation of the Endpoint and use the [Service's `externalName` property](https://kubernetes.io/docs/concepts/services-networking/service/#externalname) directly.

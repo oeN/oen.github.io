@@ -1,5 +1,7 @@
 ---
 title: "Kubernetes, external-dns, Pi-hole and a custom domain"
+# to keep the old link
+permalink: /posts/kubernetes-external-dns-pihole-and-a-custom-domain/
 date: 2021-05-06T21:17:56+02:00
 draft: false
 tags:
@@ -21,7 +23,7 @@ So, if there is a way to make **external-dns** updates that list, what I'm tryin
 
 Messing around with the interface of Pi-hole, I've noticed that under "Settings -> DNS" you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of "Upstream DNS Servers" there is also a list of custom upstream DNS servers:
 
-![Pi-hole DNS Settings](/imgs/posts/kubernetes-external-dns-pihole/pihole-dns.png) 
+![Pi-hole DNS Settings](/imgs/posts/kubernetes-external-dns-pihole/pihole-dns.png)
 
 So, the idea is to create a custom DNS server that can be updated by **external-dns** and used by Pi-hole as an **upstream DNS server**. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.
 
@@ -29,7 +31,7 @@ Great, we've got a plan. Now it's time to make it real!
 
 ## First things first, we need a DNS server
 
-Scouting between the providers supported by **external-dns** there a bunch of choices that can be self-hosted, something like [PowerDNS](https://www.powerdns.com/) or [CoreDNS](https://coredns.io/), at this point I was like: 
+Scouting between the providers supported by **external-dns** there a bunch of choices that can be self-hosted, something like [PowerDNS](https://www.powerdns.com/) or [CoreDNS](https://coredns.io/), at this point I was like:
 > "mmh interesting, CoreDNS is the one used by Kubernetes internally must be a good choice, let's go with it."
 
 A colleague suggested using PowerDNS**, but I was already set on my path, so I stuck with **CoreDNS**.
@@ -159,7 +161,7 @@ metadata:
 spec:
   ports:
     - port: 2379
-      targetPort: 2379   
+      targetPort: 2379
       name: client
     - port: 2380
       targetPort: 2380
@@ -187,10 +189,10 @@ rbac:
 isClusterService: true
 
 servers:
-- zones:  
+- zones:
   - zone: .
   port: 53
-  plugins:  
+  plugins:
   ...
   # all other plugins
   - name: forward
@@ -207,7 +209,7 @@ The most important part is the last one, we're going to configure the `etcd` plu
 
 Also, the `forward` part is important; it tells CoreDNS where to redirect all the DNS that it can't solve. Later on, I'll explain why it is crucial.
 
-With these values, we can run the command. 
+With these values, we can run the command.
 
 `helm template custom coredns/coredns --output-dir . --values values.yaml`
 
@@ -412,7 +414,7 @@ This error appears because we still have to change the Pi-hole configurations.
 
 To configure Pi-hole, you need to return to DNS Setting tab `http://pihole.local/admin/settings.php?tab=dns`, uncheck all the "Upstream DNS Servers" and insert your custom one, in my case `10.10.5.123#300123` (the # is used to specify the port).
 
-![Pi-hole DNS Settings Updated](/imgs/posts/kubernetes-external-dns-pihole/pihole-dns-updated.png) 
+![Pi-hole DNS Settings Updated](/imgs/posts/kubernetes-external-dns-pihole/pihole-dns-updated.png)
 
 Now, if you run the `nslookup` command again, you should end with the correct result:
 

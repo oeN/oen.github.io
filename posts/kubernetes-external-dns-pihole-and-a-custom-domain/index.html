@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Kubernetes, external-dns, Pi-hole and a custom domain</title>
 		<meta name="description" content="I am a developer and sometimes I write on this blog">
-		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="Diomede T.">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Diomede T.">
 		<meta name="generator" content="Eleventy v3.1.2">
 		
 		
@@ -498,14 +498,14 @@ pre[class*="language-diff-"] {
 		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
 
 		<header>
-			<a href="/eleventy-base-blog/" class="home-link">Diomede T.</a>
+			<a href="/" class="home-link">Diomede T.</a>
 			<nav>
 				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
 				<ul class="nav">
-					<li class="nav-item"><a href="/eleventy-base-blog/">Home</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/posts/">Archive</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/posts/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -518,11 +518,11 @@ pre[class*="language-diff-"] {
 
 <ul class="post-metadata">
 	<li><time datetime="2021-05-06">06 May 2021</time></li>
-	<li><a href="/eleventy-base-blog/tags/kubernetes/" class="post-tag">kubernetes</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/k8s/" class="post-tag">k8s</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/homelab/" class="post-tag">homelab</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/pi-hole/" class="post-tag">pi-hole</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/dns/" class="post-tag">dns</a></li>
+	<li><a href="/tags/kubernetes/" class="post-tag">kubernetes</a>, </li>
+	<li><a href="/tags/k8s/" class="post-tag">k8s</a>, </li>
+	<li><a href="/tags/homelab/" class="post-tag">homelab</a>, </li>
+	<li><a href="/tags/pi-hole/" class="post-tag">pi-hole</a>, </li>
+	<li><a href="/tags/dns/" class="post-tag">dns</a></li>
 </ul>
 
 <p>During these days, I'm tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.</p>
@@ -531,7 +531,7 @@ pre[class*="language-diff-"] {
 <p>Pi-hole already has a &quot;Local DNS Records&quot; section where you could list an arbitrary domain and point it to a specific IP inside or outside your network.
 So, if there is a way to make <strong>external-dns</strong> updates that list, what I'm trying to achieve would be possible with a bit of effort. Unfortunately, there is no way to update the list of local DNS records on Pi-hole programmatically at the moment of writing, so we've to find another way to do that.</p>
 <p>Messing around with the interface of Pi-hole, I've noticed that under &quot;Settings -&gt; DNS&quot; you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of &quot;Upstream DNS Servers&quot; there is also a list of custom upstream DNS servers:</p>
-<p><picture><source type="image/avif" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.avif 1266w"><source type="image/webp" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.webp 1266w"><img loading="lazy" decoding="async" src="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.png" alt="Pi-hole DNS Settings" width="1266" height="777"></picture></p>
+<p><picture><source type="image/avif" srcset="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.avif 1266w"><source type="image/webp" srcset="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.webp 1266w"><img loading="lazy" decoding="async" src="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.png" alt="Pi-hole DNS Settings" width="1266" height="777"></picture></p>
 <p>So, the idea is to create a custom DNS server that can be updated by <strong>external-dns</strong> and used by Pi-hole as an <strong>upstream DNS server</strong>. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.</p>
 <p>Great, we've got a plan. Now it's time to make it real!</p>
 <h2 id="first-things-first-we-need-a-dns-server">First things first, we need a DNS server</h2>
@@ -842,7 +842,7 @@ Address:        <span class="token number">172.29</span>.96.1<span class="token 
 <p>This error appears because we still have to change the Pi-hole configurations.</p>
 <h2 id="configure-pi-hole-to-use-our-new-dns-server">Configure Pi-hole to use our new DNS Server</h2>
 <p>To configure Pi-hole, you need to return to DNS Setting tab <code>http://pihole.local/admin/settings.php?tab=dns</code>, uncheck all the &quot;Upstream DNS Servers&quot; and insert your custom one, in my case <code>10.10.5.123#300123</code> (the # is used to specify the port).</p>
-<p><picture><source type="image/avif" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.avif 1268w"><source type="image/webp" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.webp 1268w"><img loading="lazy" decoding="async" src="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.png" alt="Pi-hole DNS Settings Updated" width="1268" height="770"></picture></p>
+<p><picture><source type="image/avif" srcset="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.avif 1268w"><source type="image/webp" srcset="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.webp 1268w"><img loading="lazy" decoding="async" src="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.png" alt="Pi-hole DNS Settings Updated" width="1268" height="770"></picture></p>
 <p>Now, if you run the <code>nslookup</code> command again, you should end with the correct result:</p>
 <pre class="language-bash" tabindex="0"><code class="language-bash">❯ <span class="token function">nslookup</span> vault.diomedet.internal
 Server:         <span class="token number">172.29</span>.96.1
@@ -865,7 +865,7 @@ Address: <span class="token number">10.10</span>.5.123</code></pre>
 <p>I'm also looking for a way to have a certificate on my internal domain, so I don't get those annoying alerts when I'm trying to access my apps via <code>HTTPS</code>.</p>
 <p>I hope you've found this article helpful. Stay tuned for future updates!</p>
 
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/eleventy-base-blog/posts/expose-an-external-resource-with-a-kubernetes-ingress/">Expose an external resource with a Kubernetes Ingress</a></li><li class="links-nextprev-next">Next →<br><a href="/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/">Forecastle: my services Dashboard of choice</a></li>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/posts/expose-an-external-resource-with-a-kubernetes-ingress/">Expose an external resource with a Kubernetes Ingress</a></li><li class="links-nextprev-next">Next →<br><a href="/posts/forecastle-my-services-dashboard-of-choice/">Forecastle: my services Dashboard of choice</a></li>
 </ul>
 
 		</main>

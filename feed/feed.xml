@@ -3,18 +3,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <title>Diomede T. Blog</title>
   <subtitle>My dusty corner of the interconnected world</subtitle>
-  <link href="https://diomedet.com/eleventy-base-blog/feed/feed.xml" rel="self" />
-  <link href="https://diomedet.com/eleventy-base-blog/" />
+  <link href="https://diomedet.com/feed/feed.xml" rel="self" />
+  <link href="https://diomedet.com/" />
   <updated>2025-07-24T18:30:00Z</updated>
-  <id>https://diomedet.com/eleventy-base-blog/</id>
+  <id>https://diomedet.com/</id>
   <author>
     <name>Diomede Tripicchio</name>
   </author>
   <entry>
     <title>Writing for Myself</title>
-    <link href="https://diomedet.com/eleventy-base-blog/posts/2025-07-23-writing-for-myself/" />
+    <link href="https://diomedet.com/posts/2025-07-23-writing-for-myself/" />
     <updated>2025-07-24T18:30:00Z</updated>
-    <id>https://diomedet.com/eleventy-base-blog/posts/2025-07-23-writing-for-myself/</id>
+    <id>https://diomedet.com/posts/2025-07-23-writing-for-myself/</id>
     <content type="html">&lt;p&gt;Sometimes I get the urge to write about what I&#39;m doing or what I&#39;ve discovered.
 But since I stay away from social media, it usually ends up going nowhere, the urge gets ignored until it builds up again.&lt;/p&gt;
 &lt;p&gt;Right now, that urge is boiling over again, and I remembered: I have a website.
@@ -55,9 +55,9 @@ Maybe it&#39;s for my future self. Who cares.&lt;/p&gt;
   </entry>
   <entry>
     <title>Note-taking is simple, right?!</title>
-    <link href="https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/" />
+    <link href="https://diomedet.com/posts/note-takin-is-simple-right/" />
     <updated>2021-05-21T19:01:56Z</updated>
-    <id>https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/</id>
+    <id>https://diomedet.com/posts/note-takin-is-simple-right/</id>
     <content type="html">&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;: Try &lt;a href=&quot;https://obsidian.md/&quot;&gt;Obsidian.md&lt;/a&gt; — it&#39;s great!&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Over the past few years, I’ve found myself in need of a tool to help me take notes — just to remember things, or to quickly store thoughts in the moment.&lt;/p&gt;
@@ -144,7 +144,7 @@ But it’s not what &lt;strong&gt;I’m looking for&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;It has everything Foam offers — but purpose-built.&lt;br&gt;
 It does what Roam does — but with proper formatting.&lt;br&gt;
 It lacks the clutter of Notion — and that helps me &lt;em&gt;just write&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/aumPc02glZ-660.avif 660w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/aumPc02glZ-660.webp 660w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/aumPc02glZ-660.png&quot; alt=&quot;Obsidian Graph&quot; width=&quot;660&quot; height=&quot;626&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/posts/note-takin-is-simple-right/aumPc02glZ-660.avif 660w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/posts/note-takin-is-simple-right/aumPc02glZ-660.webp 660w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/posts/note-takin-is-simple-right/aumPc02glZ-660.png&quot; alt=&quot;Obsidian Graph&quot; width=&quot;660&quot; height=&quot;626&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
 &lt;p&gt;My graph is still small — I haven’t imported everything yet.&lt;br&gt;
 But this is just the beginning. I’ll gradually migrate my notes here and grow my new &lt;strong&gt;Second Brain&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Oh, and I even started building a plugin for Obsidian:&lt;br&gt;
@@ -158,15 +158,15 @@ I’m sorry — I’m all out of potatoes. So instead...&lt;/p&gt;
   </entry>
   <entry>
     <title>Forecastle: my services Dashboard of choice</title>
-    <link href="https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/" />
+    <link href="https://diomedet.com/posts/forecastle-my-services-dashboard-of-choice/" />
     <updated>2021-05-12T19:59:20Z</updated>
-    <id>https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/</id>
+    <id>https://diomedet.com/posts/forecastle-my-services-dashboard-of-choice/</id>
     <content type="html">&lt;p&gt;Some weeks ago, I started the migration of my homelab from many docker-compose files to a more organized and reliable Kubernetes cluster.&lt;/p&gt;
 &lt;p&gt;In both these scenarios, I needed a way to collect all the links to the various services I have in one place. In the docker-compose implementation, I&#39;ve used &lt;a href=&quot;https://github.com/linuxserver/Heimdall&quot;&gt;Heimdall&lt;/a&gt;, a great tool that gets the job done, but it requires some manual work. With the Kubernetes version of my homelab, I&#39;m trying to automate as many tasks as possible.&lt;/p&gt;
 &lt;p&gt;I don&#39;t remember what the search phrase used to find this was (I couldn&#39;t replicate the results), but I come across &lt;a href=&quot;https://github.com/stakater/Forecastle&quot;&gt;Forecastle&lt;/a&gt; and decide to give it a try.&lt;/p&gt;
 &lt;p&gt;The installation is pretty simple, follow the steps described on the repository, and you&#39;re good to go. I went for the &amp;quot;Vanilla Manifests&amp;quot; path and ended copy the manifest in my homelab repo to inspect it better.&lt;/p&gt;
 &lt;p&gt;Looking into the manifest, I see that it will create the classic resources, Deployment, Service, ConfigMap, etc. And also a CRD called &lt;strong&gt;ForecastleApp&lt;/strong&gt; and later on, we&#39;ll see how it can be used.&lt;/p&gt;
-&lt;p&gt;As mentioned in my previous post, where I described &lt;a href=&quot;https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/kubernetes-external-dns-pihole-and-a-custom-domain.md&quot;&gt;my journey with &lt;strong&gt;external-dns&lt;/strong&gt; and &lt;strong&gt;Pi-hole&lt;/strong&gt;&lt;/a&gt;, I use &lt;a href=&quot;https://kustomize.io/&quot;&gt;Kustomize&lt;/a&gt; to manage all my manifest. After downloading the &lt;strong&gt;Forecastle&lt;/strong&gt; manifest, I&#39;ve added it to a &lt;code&gt;kustomization.yml&lt;/code&gt; file:&lt;/p&gt;
+&lt;p&gt;As mentioned in my previous post, where I described &lt;a href=&quot;https://diomedet.com/posts/forecastle-my-services-dashboard-of-choice/kubernetes-external-dns-pihole-and-a-custom-domain.md&quot;&gt;my journey with &lt;strong&gt;external-dns&lt;/strong&gt; and &lt;strong&gt;Pi-hole&lt;/strong&gt;&lt;/a&gt;, I use &lt;a href=&quot;https://kustomize.io/&quot;&gt;Kustomize&lt;/a&gt; to manage all my manifest. After downloading the &lt;strong&gt;Forecastle&lt;/strong&gt; manifest, I&#39;ve added it to a &lt;code&gt;kustomization.yml&lt;/code&gt; file:&lt;/p&gt;
 &lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Kustomization
 &lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; kustomize.config.k8s.io/v1beta1
 &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Forecastle
@@ -242,7 +242,7 @@ I’m sorry — I’m all out of potatoes. So instead...&lt;/p&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &amp;lt;ha_url&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;
     &lt;span class=&quot;token key atrule&quot;&gt;secretName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;tls&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Technically, Home Assistant is not inside the cluster yet, but this Ingress fits the example I need. If you want to know how I&#39;ve exposed Home Assistant through the cluster, check my other post on &lt;a href=&quot;https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/expose-an-external-resource-with-a-kubernetes-ingress.md&quot;&gt;how to expose an external resource with Kubernetes&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Technically, Home Assistant is not inside the cluster yet, but this Ingress fits the example I need. If you want to know how I&#39;ve exposed Home Assistant through the cluster, check my other post on &lt;a href=&quot;https://diomedet.com/posts/forecastle-my-services-dashboard-of-choice/expose-an-external-resource-with-a-kubernetes-ingress.md&quot;&gt;how to expose an external resource with Kubernetes&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In conclusion, now I have two ways of automatically create a new entry in my service dashboard, no more manual insert!&lt;/p&gt;
 &lt;p&gt;Heimdall does something more than collects links; for some apps, likes Pi-hole, it can show you some stats (like the number of queries blocked) right in the dashboard without even open the link. Even if I had many apps supported by Heimdall, I never used that feature so much, so I&#39;m not going to miss it.&lt;/p&gt;
 &lt;p&gt;There is one thing I&#39;m going to miss about Heimdall; it comes with many icons you only have to pick.&lt;/p&gt;
@@ -252,16 +252,16 @@ I’m sorry — I’m all out of potatoes. So instead...&lt;/p&gt;
   </entry>
   <entry>
     <title>Kubernetes, external-dns, Pi-hole and a custom domain</title>
-    <link href="https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/" />
+    <link href="https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/" />
     <updated>2021-05-06T19:17:56Z</updated>
-    <id>https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/</id>
+    <id>https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/</id>
     <content type="html">&lt;p&gt;During these days, I&#39;m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.&lt;/p&gt;
 &lt;p&gt;For example, I use &lt;a href=&quot;https://www.vaultproject.io/&quot;&gt;Vault&lt;/a&gt; to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an &lt;a href=&quot;https://kubernetes.io/docs/concepts/services-networking/ingress/&quot;&gt;Ingress&lt;/a&gt;; right now, I only have Ingresses with my main domain &lt;code&gt;diomedet.com&lt;/code&gt; but if I use it will be exposed to the whole internet, and I don&#39;t want that.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/kubernetes-sigs/external-dns&quot;&gt;external-dns&lt;/a&gt; is my tool of choice to handle the synchronization between my Ingresses and the DNS provider; on my local network, I use &lt;a href=&quot;https://pi-hole.net/&quot;&gt;Pi-hole&lt;/a&gt; to filter all my DNS request and to block some of them.&lt;/p&gt;
 &lt;p&gt;Pi-hole already has a &amp;quot;Local DNS Records&amp;quot; section where you could list an arbitrary domain and point it to a specific IP inside or outside your network.
 So, if there is a way to make &lt;strong&gt;external-dns&lt;/strong&gt; updates that list, what I&#39;m trying to achieve would be possible with a bit of effort. Unfortunately, there is no way to update the list of local DNS records on Pi-hole programmatically at the moment of writing, so we&#39;ve to find another way to do that.&lt;/p&gt;
 &lt;p&gt;Messing around with the interface of Pi-hole, I&#39;ve noticed that under &amp;quot;Settings -&amp;gt; DNS&amp;quot; you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of &amp;quot;Upstream DNS Servers&amp;quot; there is also a list of custom upstream DNS servers:&lt;/p&gt;
-&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.avif 1266w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.webp 1266w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.png&quot; alt=&quot;Pi-hole DNS Settings&quot; width=&quot;1266&quot; height=&quot;777&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.avif 1266w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.webp 1266w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.png&quot; alt=&quot;Pi-hole DNS Settings&quot; width=&quot;1266&quot; height=&quot;777&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
 &lt;p&gt;So, the idea is to create a custom DNS server that can be updated by &lt;strong&gt;external-dns&lt;/strong&gt; and used by Pi-hole as an &lt;strong&gt;upstream DNS server&lt;/strong&gt;. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.&lt;/p&gt;
 &lt;p&gt;Great, we&#39;ve got a plan. Now it&#39;s time to make it real!&lt;/p&gt;
 &lt;h2 id=&quot;first-things-first-we-need-a-dns-server&quot;&gt;First things first, we need a DNS server&lt;/h2&gt;
@@ -572,7 +572,7 @@ Address:        &lt;span class=&quot;token number&quot;&gt;172.29&lt;/span&gt;.9
 &lt;p&gt;This error appears because we still have to change the Pi-hole configurations.&lt;/p&gt;
 &lt;h2 id=&quot;configure-pi-hole-to-use-our-new-dns-server&quot;&gt;Configure Pi-hole to use our new DNS Server&lt;/h2&gt;
 &lt;p&gt;To configure Pi-hole, you need to return to DNS Setting tab &lt;code&gt;http://pihole.local/admin/settings.php?tab=dns&lt;/code&gt;, uncheck all the &amp;quot;Upstream DNS Servers&amp;quot; and insert your custom one, in my case &lt;code&gt;10.10.5.123#300123&lt;/code&gt; (the # is used to specify the port).&lt;/p&gt;
-&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.avif 1268w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.webp 1268w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.png&quot; alt=&quot;Pi-hole DNS Settings Updated&quot; width=&quot;1268&quot; height=&quot;770&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.avif 1268w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.webp 1268w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.png&quot; alt=&quot;Pi-hole DNS Settings Updated&quot; width=&quot;1268&quot; height=&quot;770&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
 &lt;p&gt;Now, if you run the &lt;code&gt;nslookup&lt;/code&gt; command again, you should end with the correct result:&lt;/p&gt;
 &lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;❯ &lt;span class=&quot;token function&quot;&gt;nslookup&lt;/span&gt; vault.diomedet.internal
 Server:         &lt;span class=&quot;token number&quot;&gt;172.29&lt;/span&gt;.96.1
@@ -598,9 +598,9 @@ Address: &lt;span class=&quot;token number&quot;&gt;10.10&lt;/span&gt;.5.123&lt;
   </entry>
   <entry>
     <title>Expose an external resource with a Kubernetes Ingress</title>
-    <link href="https://diomedet.com/eleventy-base-blog/posts/expose-an-external-resource-with-a-kubernetes-ingress/" />
+    <link href="https://diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/" />
     <updated>2021-05-02T19:50:31Z</updated>
-    <id>https://diomedet.com/eleventy-base-blog/posts/expose-an-external-resource-with-a-kubernetes-ingress/</id>
+    <id>https://diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/</id>
     <content type="html">&lt;p&gt;The other night I was wandering around my homelab and noticed that I didn&#39;t correctly expose my new home assistant instance to the internet. Some months ago, home assistant (from now on HA) found its new permanent home, a Rasperry PI 4 4GB; since we&#39;re in lockdown, I didn&#39;t need to reach HA outside my local network.&lt;/p&gt;
 &lt;p&gt;I&#39;m still working from home (and love it), but it&#39;s time to fix this now. While choosing which method was the best to expose it, I had an idea, why not use an Ingress in my Kubernetes cluster?&lt;/p&gt;
 &lt;p&gt;It could seem a little odd, but hear me out:&lt;/p&gt;

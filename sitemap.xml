@@ -2,52 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/posts/expose-an-external-resource-with-a-kubernetes-ingress/</loc>
+		<loc>https://diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/</loc>
 		<lastmod>2021-05-02</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/</loc>
+		<loc>https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/</loc>
 		<lastmod>2021-05-06</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/</loc>
+		<loc>https://diomedet.com/posts/forecastle-my-services-dashboard-of-choice/</loc>
 		<lastmod>2021-05-12</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/</loc>
+		<loc>https://diomedet.com/posts/note-takin-is-simple-right/</loc>
 		<lastmod>2021-05-21</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/posts/2025-07-23-writing-for-myself/</loc>
+		<loc>https://diomedet.com/posts/2025-07-23-writing-for-myself/</loc>
 		<lastmod>2025-07-24</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/about/</loc>
+		<loc>https://diomedet.com/about/</loc>
 		<lastmod>2025-07-28</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/</loc>
+		<loc>https://diomedet.com/</loc>
 		<lastmod>2025-07-28</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/posts/</loc>
+		<loc>https://diomedet.com/posts/</loc>
 		<lastmod>2025-07-28</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/tags/</loc>
+		<loc>https://diomedet.com/tags/</loc>
 		<lastmod>2025-07-28</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://diomedet.com/eleventy-base-blog/feed/feed.xml</loc>
+		<loc>https://diomedet.com/feed/feed.xml</loc>
 		<lastmod>2025-07-28</lastmod>
 	</url>
 </urlset>

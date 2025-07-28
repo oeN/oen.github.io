@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Expose an external resource with a Kubernetes Ingress</title>
 		<meta name="description" content="I am a developer and sometimes I write on this blog">
-		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="Diomede T.">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Diomede T.">
 		<meta name="generator" content="Eleventy v3.1.2">
 		
 		
@@ -498,14 +498,14 @@ pre[class*="language-diff-"] {
 		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
 
 		<header>
-			<a href="/eleventy-base-blog/" class="home-link">Diomede T.</a>
+			<a href="/" class="home-link">Diomede T.</a>
 			<nav>
 				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
 				<ul class="nav">
-					<li class="nav-item"><a href="/eleventy-base-blog/">Home</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/posts/">Archive</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/posts/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -518,10 +518,10 @@ pre[class*="language-diff-"] {
 
 <ul class="post-metadata">
 	<li><time datetime="2021-05-02">02 May 2021</time></li>
-	<li><a href="/eleventy-base-blog/tags/kubernetes/" class="post-tag">kubernetes</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/k8s/" class="post-tag">k8s</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/homelab/" class="post-tag">homelab</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/home-assistant/" class="post-tag">home-assistant</a></li>
+	<li><a href="/tags/kubernetes/" class="post-tag">kubernetes</a>, </li>
+	<li><a href="/tags/k8s/" class="post-tag">k8s</a>, </li>
+	<li><a href="/tags/homelab/" class="post-tag">homelab</a>, </li>
+	<li><a href="/tags/home-assistant/" class="post-tag">home-assistant</a></li>
 </ul>
 
 <p>The other night I was wandering around my homelab and noticed that I didn't correctly expose my new home assistant instance to the internet. Some months ago, home assistant (from now on HA) found its new permanent home, a Rasperry PI 4 4GB; since we're in lockdown, I didn't need to reach HA outside my local network.</p>
@@ -591,7 +591,7 @@ pre[class*="language-diff-"] {
 <p>And remember that I told you that I want to move some service that uses HA inside my k8s cluster? Now, all I have to do is deploy them and use `home-assistant as the URL for HA instead of using the IP address.</p>
 <p>For the sake of completion, if you already have a local domain for your HA instance, you can skip the creation of the Endpoint and use the <a href="https://kubernetes.io/docs/concepts/services-networking/service/#externalname">Service's <code>externalName</code> property</a> directly.</p>
 
-<ul class="links-nextprev"><li class="links-nextprev-next">Next →<br><a href="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/">Kubernetes, external-dns, Pi-hole and a custom domain</a></li>
+<ul class="links-nextprev"><li class="links-nextprev-next">Next →<br><a href="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/">Kubernetes, external-dns, Pi-hole and a custom domain</a></li>
 </ul>
 
 		</main>

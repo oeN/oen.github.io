@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Forecastle: my services Dashboard of choice</title>
 		<meta name="description" content="I am a developer and sometimes I write on this blog">
-		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="Diomede T.">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="Diomede T.">
 		<meta name="generator" content="Eleventy v3.1.2">
 		
 		
@@ -498,14 +498,14 @@ pre[class*="language-diff-"] {
 		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
 
 		<header>
-			<a href="/eleventy-base-blog/" class="home-link">Diomede T.</a>
+			<a href="/" class="home-link">Diomede T.</a>
 			<nav>
 				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
 				<ul class="nav">
-					<li class="nav-item"><a href="/eleventy-base-blog/">Home</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/posts/">Archive</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
-					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/posts/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
 				</ul>
 			</nav>
 		</header>
@@ -518,9 +518,9 @@ pre[class*="language-diff-"] {
 
 <ul class="post-metadata">
 	<li><time datetime="2021-05-12">12 May 2021</time></li>
-	<li><a href="/eleventy-base-blog/tags/kubernetes/" class="post-tag">kubernetes</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/k8s/" class="post-tag">k8s</a>, </li>
-	<li><a href="/eleventy-base-blog/tags/homelab/" class="post-tag">homelab</a></li>
+	<li><a href="/tags/kubernetes/" class="post-tag">kubernetes</a>, </li>
+	<li><a href="/tags/k8s/" class="post-tag">k8s</a>, </li>
+	<li><a href="/tags/homelab/" class="post-tag">homelab</a></li>
 </ul>
 
 <p>Some weeks ago, I started the migration of my homelab from many docker-compose files to a more organized and reliable Kubernetes cluster.</p>
@@ -528,7 +528,7 @@ pre[class*="language-diff-"] {
 <p>I don't remember what the search phrase used to find this was (I couldn't replicate the results), but I come across <a href="https://github.com/stakater/Forecastle">Forecastle</a> and decide to give it a try.</p>
 <p>The installation is pretty simple, follow the steps described on the repository, and you're good to go. I went for the &quot;Vanilla Manifests&quot; path and ended copy the manifest in my homelab repo to inspect it better.</p>
 <p>Looking into the manifest, I see that it will create the classic resources, Deployment, Service, ConfigMap, etc. And also a CRD called <strong>ForecastleApp</strong> and later on, we'll see how it can be used.</p>
-<p>As mentioned in my previous post, where I described <a href="kubernetes-external-dns-pihole-and-a-custom-domain.md">my journey with <strong>external-dns</strong> and <strong>Pi-hole</strong></a>, I use <a href="https://kustomize.io/">Kustomize</a> to manage all my manifest. After downloading the <strong>Forecastle</strong> manifest, I've added it to a <code>kustomization.yml</code> file:</p>
+<p>As mentioned in my previous post, where I described <a href="./kubernetes-external-dns-pihole-and-a-custom-domain.md">my journey with <strong>external-dns</strong> and <strong>Pi-hole</strong></a>, I use <a href="https://kustomize.io/">Kustomize</a> to manage all my manifest. After downloading the <strong>Forecastle</strong> manifest, I've added it to a <code>kustomization.yml</code> file:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">kind</span><span class="token punctuation">:</span> Kustomization
 <span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> kustomize.config.k8s.io/v1beta1
 <span class="token key atrule">namespace</span><span class="token punctuation">:</span> Forecastle
@@ -604,14 +604,14 @@ pre[class*="language-diff-"] {
   <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> &lt;ha_url<span class="token punctuation">></span>
     <span class="token key atrule">secretName</span><span class="token punctuation">:</span> home<span class="token punctuation">-</span>assistant<span class="token punctuation">-</span>tls</code></pre>
-<p>Technically, Home Assistant is not inside the cluster yet, but this Ingress fits the example I need. If you want to know how I've exposed Home Assistant through the cluster, check my other post on <a href="expose-an-external-resource-with-a-kubernetes-ingress.md">how to expose an external resource with Kubernetes</a>.</p>
+<p>Technically, Home Assistant is not inside the cluster yet, but this Ingress fits the example I need. If you want to know how I've exposed Home Assistant through the cluster, check my other post on <a href="./expose-an-external-resource-with-a-kubernetes-ingress.md">how to expose an external resource with Kubernetes</a>.</p>
 <p>In conclusion, now I have two ways of automatically create a new entry in my service dashboard, no more manual insert!</p>
 <p>Heimdall does something more than collects links; for some apps, likes Pi-hole, it can show you some stats (like the number of queries blocked) right in the dashboard without even open the link. Even if I had many apps supported by Heimdall, I never used that feature so much, so I'm not going to miss it.</p>
 <p>There is one thing I'm going to miss about Heimdall; it comes with many icons you only have to pick.</p>
 <p>Anyway, I'm not saying that <strong>Forecastle</strong> is better than <strong>Heimdall</strong> it only suits my use case better.</p>
 <p>See you the next time, bye!</p>
 
-<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/">Kubernetes, external-dns, Pi-hole and a custom domain</a></li><li class="links-nextprev-next">Next →<br><a href="/eleventy-base-blog/posts/note-takin-is-simple-right/">Note-taking is simple, right?!</a></li>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/posts/kubernetes-external-dns-pihole-and-a-custom-domain/">Kubernetes, external-dns, Pi-hole and a custom domain</a></li><li class="links-nextprev-next">Next →<br><a href="/posts/note-takin-is-simple-right/">Note-taking is simple, right?!</a></li>
 </ul>
 
 		</main>

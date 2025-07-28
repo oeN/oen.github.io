@@ -1,259 +1,880 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Kubernetes, external-dns, Pi-hole and a custom domain | Diomede T.</title><meta name=keywords content="kubernetes,k8s,homelab,pi-hole,dns"><meta name=description content="During these days, I&rsquo;m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.
-For example, I use Vault to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an Ingress; right now, I only have Ingresses with my main domain diomedet."><meta name=author content="Diomede"><link rel=canonical href=https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/><link crossorigin=anonymous href=/assets/css/stylesheet.min.2d6dbfc6e0f8a1db1c9d082a76dc11d094328cf63f247bbc2421dfaa7f2bb170.css integrity="sha256-LW2/xuD4odscnQgqdtwR0JQyjPY/JHu8JCHfqn8rsXA=" rel="preload stylesheet" as=style><link rel=preload href=/imgs/avatar.jpg as=image><script defer crossorigin=anonymous src=/assets/js/highlight.min.b95bacdc39e37a332a9f883b1e78be4abc1fdca2bc1f2641f55e3cd3dabd4d61.js integrity="sha256-uVus3DnjejMqn4g7Hni+Srwf3KK8HyZB9V4809q9TWE=" onload=hljs.initHighlightingOnLoad()></script>
-<link rel=icon href=https://diomedet.com/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://diomedet.com/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://diomedet.com/favicon-32x32.png><link rel=apple-touch-icon href=https://diomedet.com/apple-touch-icon.png><link rel=mask-icon href=https://diomedet.com/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><meta name=generator content="Hugo 0.105.0"><meta name=monetization content="$ilp.uphold.com/bbEbZ24PYEQA"><link rel=me href=https://hachyderm.io/@diomedet><meta property="og:title" content="Kubernetes, external-dns, Pi-hole and a custom domain"><meta property="og:description" content="During these days, I&rsquo;m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.
-For example, I use Vault to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an Ingress; right now, I only have Ingresses with my main domain diomedet."><meta property="og:type" content="article"><meta property="og:url" content="https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-05-06T21:17:56+02:00"><meta property="article:modified_time" content="2021-05-06T21:17:56+02:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Kubernetes, external-dns, Pi-hole and a custom domain"><meta name=twitter:description content="During these days, I&rsquo;m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.
-For example, I use Vault to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an Ingress; right now, I only have Ingresses with my main domain diomedet."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://diomedet.com/posts/"},{"@type":"ListItem","position":2,"name":"Kubernetes, external-dns, Pi-hole and a custom domain","item":"https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Kubernetes, external-dns, Pi-hole and a custom domain","name":"Kubernetes, external-dns, Pi-hole and a custom domain","description":"During these days, I\u0026rsquo;m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.\nFor example, I use Vault to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an Ingress; right now, I only have Ingresses with my main domain diomedet.","keywords":["kubernetes","k8s","homelab","pi-hole","dns"],"articleBody":"During these days, I’m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.\nFor example, I use Vault to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an Ingress; right now, I only have Ingresses with my main domain diomedet.com but if I use it will be exposed to the whole internet, and I don’t want that.\nexternal-dns is my tool of choice to handle the synchronization between my Ingresses and the DNS provider; on my local network, I use Pi-hole to filter all my DNS request and to block some of them.\nPi-hole already has a “Local DNS Records” section where you could list an arbitrary domain and point it to a specific IP inside or outside your network. So, if there is a way to make external-dns updates that list, what I’m trying to achieve would be possible with a bit of effort. Unfortunately, there is no way to update the list of local DNS records on Pi-hole programmatically at the moment of writing, so we’ve to find another way to do that.\nMessing around with the interface of Pi-hole, I’ve noticed that under “Settings -\u003e DNS” you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of “Upstream DNS Servers” there is also a list of custom upstream DNS servers:\nSo, the idea is to create a custom DNS server that can be updated by external-dns and used by Pi-hole as an upstream DNS server. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.\nGreat, we’ve got a plan. Now it’s time to make it real!\nFirst things first, we need a DNS server Scouting between the providers supported by external-dns there a bunch of choices that can be self-hosted, something like PowerDNS or CoreDNS, at this point I was like:\n“mmh interesting, CoreDNS is the one used by Kubernetes internally must be a good choice, let’s go with it.”\nA colleague suggested using PowerDNS**, but I was already set on my path, so I stuck with CoreDNS.\nTo be clear, it’s not a wrong choice, but it might be a little overkill for this specific purpose but let’s see what difficulties this path reserved for us.\nIn the external-dns repo, there is a folder docs/tutorial with a markdown file for each supported provider (I think each didn’t count), we’re looking for the CoreDNS one: https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md\nIt is a tutorial for minikube, but ignoring that part, we can use it for every Kubernetes cluster and bonus point, show us even how to install CoreDNS, great two birds with one stone.\nIf you’ve opened the file, you can see from the very beginning that the birds are not two anymore but three. The more, the merrier, right, right?!\nIf you haven’t opened the link, let me recap that for you what we need to install:\nCoreDNS (obviously) etcd another instance of external-dns (you need an instance of external-dns for each dns provider you’re going to support) Wait, why we need etcd? We need etcd because this is the way how external-dns talks to CoreDNS, we have to create a section in the configuration of CoreDNS that tells him to read the value from a specific path on the etcd instance we’re going to configure and external-dns will update the same path with the information about the Ingresses we’re going to create with our internal domain.\nNote: Before switching to etcd directly, CoreDNS was using SkyDNS (a service built on top of etcd) to serve these kinds of request, so, in the manifest files, we’re going to see you’ll find some refuse of that implementation.\nInstall etcd Let’s get down to business and install etcd. In the end, it is a core component of Kubernetes; there nothing wrong with learning more about it. Just to let you know, don’t use the internal etcd for a user application (like the one we want to install here); it is not meant for that.\nThe tutorial linked above suggests we use the etcd-operator and use https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml to create our etcd cluster.\nGreat, an operator nothing more simple than that…\nSlow down; the etcd-operator repo was archived more than a year ago; even if it could work for a case like this, we don’t want to install an operator that is not maintained anymore, so let’s see how to deploy it manually.\nAfter searching around, I ended up on this documentation page https://etcd.io/docs/v3.4/op-guide/container/#docker that shows how to deploy, etcd with a single node configuration; prefect is what we need here.\nBasically we need to port the command showed in the link in a manifest for kubernetes:\ndocker run from etcd documentation\ndocker run \\ -p 2379:2379 \\ -p 2380:2380 \\ --volume=${DATA_DIR}:/etcd-data \\ --name etcd ${REGISTRY}:latest \\ /usr/local/bin/etcd \\ --data-dir=/etcd-data --name node1 \\ --initial-advertise-peer-urls http://${NODE1}:2380 --listen-peer-urls http://0.0.0.0:2380 \\ --advertise-client-urls http://${NODE1}:2379 --listen-client-urls http://0.0.0.0:2379 \\ --initial-cluster node1=http://${NODE1}:2380 Manifest file etc-sts.yml\napiVersion: apps/v1 kind: StatefulSet metadata: name: etcd labels: app.kubernetes.io/name: etcd spec: serviceName: etcd replicas: 1 updateStrategy: type: OnDelete selector: matchLabels: app.kubernetes.io/name: etcd template: metadata: labels: app.kubernetes.io/name: etcd spec: containers: - name: etcd image: gcr.io/etcd-development/etcd:latest imagePullPolicy: IfNotPresent command: - /usr/local/bin/etcd env: - name: ETCD_NAME value: node1 - name: ETCD_DATA_DIR value: /etcd-data - name: ETCD_LISTEN_PEER_URLS value: http://0.0.0.0:2380 - name: ETCD_LISTEN_CLIENT_URLS value: http://0.0.0.0:2379 - name: ETCD_INITIAL_ADVERTISE_PEER_URLS value: http://0.0.0.0:2380 - name: ETCD_ADVERTISE_CLIENT_URLS value: http://0.0.0.0:2379 - name: ETCD_INITIAL_CLUSTER value: \"node1=http://0.0.0.0:2380\" volumeMounts: - name: data mountPath: /etcd-data ports: - containerPort: 2379 name: client - containerPort: 2380 name: peer volumeClaimTemplates: - metadata: name: data spec: accessModes: - ReadWriteOnce resources: requests: storage: 1Gi # we don't need much space to store DNS information We’re going to use a StatefulSet because etcd is a stateful app and needs a volume to persist its data. Rather than the classic Deploy with a StatefulSet we’re certain that the generated pod will always receive the same name, and the volume attached to it will always be the same. More on the StatefulSet\nThe only noticeable difference between the docker run ... command and this manifest file is that we’re using environment variables instead of configuration flags. I had some trouble getting the flags working, and I like more the environment variables, anyway; here a list of etcd configuration flags with the matching variable.\nNow, in order to expose etcd to the other applications in the cluster we need to create a Service too:\netc-service.yml\napiVersion: v1 kind: Service metadata: name: etcd labels: app.kubernetes.io/name: etcd spec: ports: - port: 2379 targetPort: 2379 name: client - port: 2380 targetPort: 2380 name: peer selector: app.kubernetes.io/name: etcd Nothing special here, but this completes the manifest needed for our etcd instance.\nInstall CoreDNS Now that we have our etcd, we can continue with the tutorial and install our custom version of CoreDSN. You can use helm to install it, or if you want a more instructive approach, you can use helm template to render the file and applying them manually or with kustomize. In this way, you can check them individually to see what the chart will create in your cluster.\nSince my homelab is a way to learn more about Kubernetes, I choose to render the file with helm template and use kustomize to apply them later.\nWhichever way you choose, the important part is to set a couple of options inside the values.yml file correctly.\n# if you don't have RBAC enabled on your cluster, I think you can set this to false rbac: create: true # isClusterService specifies whether the chart should be deployed as cluster-service or regular k8s app. isClusterService: true servers: - zones: - zone: . port: 53 plugins: ... # all other plugins - name: forward parameters: . 8.8.8.8:53 # tells where to forward all the DNS requests that CoreDNS can't solve - name: etcd parameters: diomedet.internal # insert your domain here configBlock: |- stubzones path /skydns endpoint http://etcd:2379 The most important part is the last one, we’re going to configure the etcd plugin and tell CoreDNS to look inside the http://etcd:2379 to find the information about the domain diomedet.internal (this is my internal domain)\nAlso, the forward part is important; it tells CoreDNS where to redirect all the DNS that it can’t solve. Later on, I’ll explain why it is crucial.\nWith these values, we can run the command.\nhelm template custom coredns/coredns --output-dir . --values values.yaml\n(custom is the name of my release, then it’ll turn out in custom-coredns)\nHelm will create a folder coredns/template with five files in it:\ncoredns/templates ├── clusterrole.yaml ├── clusterrolebinding.yaml ├── configmap.yaml ├── deployment.yaml └── service.yaml Now the only thing we’ve to do is to kubectl apply these files, and we’ll end up with a working CoreDNS instance. Working but still not reachable outside the cluster, if you have MetalLB configured, you can change the ServiceType from ClusterIP to LoadBalancer to get an IP. I haven’t this feature in my cluster yet, so for now, I’m going to use the NodePort type; this allows me to use a port of my node and point it to the service.\nWith kustomize, there is the concept of patches, so I can create a patch that will modify the service.yaml file without directly touching it. I prefer this way, so if I have to re-run helm template ... I don’t have to mind any modification I could have made because kustomize will patch everything.\npatches/service.yaml\napiVersion: v1 kind: Service metadata: name: custom-coredns spec: type: NodePort ports: - {port: 53, protocol: UDP, name: udp-53, nodePort: 30053} - {port: 53, protocol: TCP, name: tcp-53, nodePort: 30053} Here I tell Kubernetes to use the port 30053 for both UDP and TCP. With the NodePort, you can use ports from 30000 to 32767 if you do not modify it.\nTo wrap it up, here my kustomization.yml file:\nkind: Kustomization apiVersion: kustomize.config.k8s.io/v1beta1 namespace: custom-coredns resources: - templates/clusterrole.yaml - templates/clusterrolebinding.yaml - templates/configmap.yaml - templates/deployment.yaml - templates/service.yaml - etcd-sts.yml - etcd-service.yml patchesStrategicMerge: - patches/service.yaml If you followed my path, you should have all the files to make it work, anyway. If you’ve installed the helm chart directly, you can always change the service manifest directly on Kubernetes. You can even set the serviceType in the values.yaml file, but I didn’t find a way to specify the nodePort to use, so I decided to go with the patch.\nFinally, install external-dns Now we can finally install the instance of external-dns that will monitor the Ingress created with our internal domain.\nI have RBAC enabled on my cluster, so my manifest look like this:\nexternal-dns.yml\n--- apiVersion: rbac.authorization.k8s.io/v1beta1 kind: ClusterRole metadata: name: external-dns rules: - apiGroups: [\"\"] resources: [\"services\",\"endpoints\",\"pods\"] verbs: [\"get\",\"watch\",\"list\"] - apiGroups: [\"extensions\",\"networking.k8s.io\"] resources: [\"ingresses\"] verbs: [\"get\",\"watch\",\"list\"] - apiGroups: [\"\"] resources: [\"nodes\"] verbs: [\"list\"] --- apiVersion: rbac.authorization.k8s.io/v1beta1 kind: ClusterRoleBinding metadata: name: external-dns-viewer roleRef: apiGroup: rbac.authorization.k8s.io kind: ClusterRole name: external-dns subjects: - kind: ServiceAccount name: external-dns namespace: external-dns --- apiVersion: v1 kind: ServiceAccount metadata: name: external-dns namespace: external-dns --- apiVersion: apps/v1 kind: Deployment metadata: name: external-dns spec: strategy: type: Recreate selector: matchLabels: app: external-dns template: metadata: labels: app: external-dns spec: serviceAccountName: external-dns containers: - name: external-dns image: k8s.gcr.io/external-dns/external-dns:v0.7.6 args: - --source=ingress - --provider=coredns - --log-level=debug # debug only - --domain-filter=diomedet.internal env: - name: ETCD_URLS value: http://etcd.custom-coredns:2379 If you don’t have RBAC enable, you can use only the Deployment manifest.\nThis is the most straightforward part, just set the correct ETCD_URLS with the correct value, and you’re good to go. I have deployed my external-dns in a namespace different than the etcd one, so in the ETCD_URLS variable, I have to specify the service with the namespace too http://etcd.custom-coredns:2379\nOnce you applied your manifest you can create an ingress with the internal domain you chose, in my case is something like:\nvault/ingress.yml\napiVersion: networking.k8s.io/v1beta1 kind: Ingress metadata: annotations: kubernetes.io/ingress.class: nginx name: vault-ui-internal namespace: vault spec: rules: - host: vault.diomedet.internal http: paths: - backend: serviceName: vault servicePort: http path: / After you create an Ingress with your internal domain on the external-dns pod, you should see a log like the following one:\nlevel=debug msg=\"Endpoints generated from ingress: vault/vault-ui-internal: [vault.diomedet.internal 0 IN A 10.10.5.123 []]\"\n10.10.5.123 is the IP address of my Kubernetes cluster, it’s called “Scyther”, the Pokédex number of Scyther is #123, so here explained my IP, not that you asked, but here it is anyway :P\nNow, if I use dig to check the name resolution, it should work correctly:\n❯ dig @10.10.5.123 -p 30053 vault.diomedet.internal ; \u003c\u003c\u003e\u003e DiG 9.11.3-1ubuntu1.13-Ubuntu \u003c\u003c\u003e\u003e @10.10.5.123 -p 30053 vault.diomedet.internal ; (1 server found) ;; global options: +cmd ;; Got answer: ;; -\u003e\u003eHEADER\u003c\u003c- opcode: QUERY, status: NOERROR, id: 5546 ;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1 ;; WARNING: recursion requested but not available ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 4096 ; COOKIE: bc40278d825e2b16 (echoed) ;; QUESTION SECTION: ;vault.diomedet.internal. IN A ;; ANSWER SECTION: vault.diomedet.internal. 30 IN A 10.10.5.123 ;; Query time: 3 msec ;; SERVER: 10.10.5.123#30053(10.10.5.123) ;; WHEN: Sat May 08 16:11:48 CEST 2021 ;; MSG SIZE rcvd: 103 But if I run the nslookup command, I still get an error:\n❯ nslookup vault.diomedet.internal Server: 172.29.96.1 Address: 172.29.96.1#53 ** server can't find vault.diomedet.internal: NXDOMAIN This error appears because we still have to change the Pi-hole configurations.\nConfigure Pi-hole to use our new DNS Server To configure Pi-hole, you need to return to DNS Setting tab http://pihole.local/admin/settings.php?tab=dns, uncheck all the “Upstream DNS Servers” and insert your custom one, in my case 10.10.5.123#300123 (the # is used to specify the port).\nNow, if you run the nslookup command again, you should end with the correct result:\n❯ nslookup vault.diomedet.internal Server: 172.29.96.1 Address: 172.29.96.1#53 Non-authoritative answer: Name: vault.diomedet.internal Address: 10.10.5.123 Great! We can create as many Ingress with our internal domain as we want, and they will always be resolved to our cluster IP.\nConclusion Unfortunately, our instance of CoreDNS will become a central point for our network in this scenario. If something happens to our cluster or the CoreDNS pod stops, we’ll lose the ability to resolve domain names. I’m still searching for a way to solve this problem and have a more reliable solution, but for now, I have to stick with this downside.\nDo you remember the forward value that we set on the values.yaml for CoreDNS?\nThat option has become the only way to choose which DNS server we want to use to solve all the DNS requests that can’t be solved internally and aren’t blocked by Pi-hole. This is because if we check some of the “Upstream DNS Server”, we’ll lose the ability to resolve our internal domain.\nI have some ideas on how to solve that:\nA second Pi-hole that is going to be my “Custom 2” upstream DNS Server An ingress that masks the IP of the DNS server I want to use, something like I’ve done in a previous post Expose an external resource with a Kubernetes Ingress. A mask is needed because if you insert 8.8.8.8 into the “Custom 2” field, Pi-hole will automatically check the Google server for you. But I haven’t tested any of that, so, for today, this is it.\nI’m also looking for a way to have a certificate on my internal domain, so I don’t get those annoying alerts when I’m trying to access my apps via HTTPS.\nI hope you’ve found this article helpful. Stay tuned for future updates!\n","wordCount":"2588","inLanguage":"en","datePublished":"2021-05-06T21:17:56+02:00","dateModified":"2021-05-06T21:17:56+02:00","author":{"@type":"Person","name":"Diomede"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://diomedet.com/posts/kubernetes-external-dns-pihole-and-a-custom-domain/"},"publisher":{"@type":"Organization","name":"Diomede T.","logo":{"@type":"ImageObject","url":"https://diomedet.com/favicon.ico"}}}</script></head><body id=top><script>window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><noscript><style type=text/css>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:#1d1e20;--entry:#2e2e33;--primary:rgba(255, 255, 255, 0.84);--secondary:rgba(255, 255, 255, 0.56);--tertiary:rgba(255, 255, 255, 0.16);--content:rgba(255, 255, 255, 0.74);--hljs-bg:#2e2e33;--code-bg:#37383e;--border:#333}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><header class=header><nav class=nav><div class=logo><a href=https://diomedet.com/ accesskey=h title="Diomede T. (Alt + H)">Diomede T.</a>
-<span class=logo-switches></span></div><ul id=menu><li><a href=https://diomedet.com/about title="About Me"><span>About Me</span></a></li><li><a href=https://diomedet.com/posts title=Posts><span>Posts</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class=post-title>Kubernetes, external-dns, Pi-hole and a custom domain</h1><div class=post-meta>May 6, 2021&nbsp;·&nbsp;13 min&nbsp;·&nbsp;Diomede&nbsp;|&nbsp;<a href=https://github.com/oeN/oen.github.io/blob/master/content/posts/kubernetes-external-dns-pihole-and-a-custom-domain.md rel="noopener noreferrer" target=_blank>Suggest Changes</a></div></header><div class=post-content><p>During these days, I&rsquo;m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.</p><p>For example, I use <a href=https://www.vaultproject.io/>Vault</a> to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an <a href=https://kubernetes.io/docs/concepts/services-networking/ingress/>Ingress</a>; right now, I only have Ingresses with my main domain <code>diomedet.com</code> but if I use it will be exposed to the whole internet, and I don&rsquo;t want that.</p><p><a href=https://github.com/kubernetes-sigs/external-dns>external-dns</a> is my tool of choice to handle the synchronization between my Ingresses and the DNS provider; on my local network, I use <a href=https://pi-hole.net/>Pi-hole</a> to filter all my DNS request and to block some of them.</p><p>Pi-hole already has a &ldquo;Local DNS Records&rdquo; section where you could list an arbitrary domain and point it to a specific IP inside or outside your network.
-So, if there is a way to make <strong>external-dns</strong> updates that list, what I&rsquo;m trying to achieve would be possible with a bit of effort. Unfortunately, there is no way to update the list of local DNS records on Pi-hole programmatically at the moment of writing, so we&rsquo;ve to find another way to do that.</p><p>Messing around with the interface of Pi-hole, I&rsquo;ve noticed that under &ldquo;Settings -> DNS&rdquo; you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of &ldquo;Upstream DNS Servers&rdquo; there is also a list of custom upstream DNS servers:</p><p><img loading=lazy src=/imgs/posts/kubernetes-external-dns-pihole/pihole-dns.png alt="Pi-hole DNS Settings"></p><p>So, the idea is to create a custom DNS server that can be updated by <strong>external-dns</strong> and used by Pi-hole as an <strong>upstream DNS server</strong>. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.</p><p>Great, we&rsquo;ve got a plan. Now it&rsquo;s time to make it real!</p><h2 id=first-things-first-we-need-a-dns-server>First things first, we need a DNS server<a hidden class=anchor aria-hidden=true href=#first-things-first-we-need-a-dns-server>#</a></h2><p>Scouting between the providers supported by <strong>external-dns</strong> there a bunch of choices that can be self-hosted, something like <a href=https://www.powerdns.com/>PowerDNS</a> or <a href=https://coredns.io/>CoreDNS</a>, at this point I was like:</p><blockquote><p>&ldquo;mmh interesting, CoreDNS is the one used by Kubernetes internally must be a good choice, let&rsquo;s go with it.&rdquo;</p></blockquote><p>A colleague suggested using PowerDNS**, but I was already set on my path, so I stuck with <strong>CoreDNS</strong>.</p><p>To be clear, it&rsquo;s not a wrong choice, but it might be a little overkill for this specific purpose but let&rsquo;s see what difficulties this path reserved for us.</p><p>In the <strong>external-dns</strong> repo, there is a folder <code>docs/tutorial</code> with a markdown file for each supported provider (I think each didn&rsquo;t count), we&rsquo;re looking for the CoreDNS one: <a href=https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md>https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md</a></p><p>It is a tutorial for minikube, but ignoring that part, we can use it for every Kubernetes cluster and bonus point, show us even how to install <strong>CoreDNS</strong>, great two birds with one stone.</p><p>If you&rsquo;ve opened the file, you can see from the very beginning that the birds are not two anymore but three. The more, the merrier, right, right?!</p><p>If you haven&rsquo;t opened the link, let me recap that for you what we need to install:</p><ul><li>CoreDNS (obviously)</li><li>etcd</li><li>another instance of external-dns (you need an instance of external-dns for each dns provider you&rsquo;re going to support)</li></ul><h2 id=wait-why-we-need-etcd>Wait, why we need etcd?<a hidden class=anchor aria-hidden=true href=#wait-why-we-need-etcd>#</a></h2><p>We need etcd because this is the way how <strong>external-dns</strong> talks to <strong>CoreDNS</strong>, we have to create a section in the configuration of CoreDNS that tells him to read the value from a specific path on the <strong>etcd</strong> instance we&rsquo;re going to configure and external-dns will update the same path with the information about the Ingresses we&rsquo;re going to create with our internal domain.</p><p><strong>Note:</strong> Before switching to <strong>etcd</strong> directly, <strong>CoreDNS</strong> was using <a href=https://github.com/skynetservices/skydns>SkyDNS</a> (a service built on top of etcd) to serve these kinds of request, so, in the manifest files, we&rsquo;re going to see you&rsquo;ll find some refuse of that implementation.</p><h2 id=install-etcd>Install etcd<a hidden class=anchor aria-hidden=true href=#install-etcd>#</a></h2><p>Let&rsquo;s get down to business and install <strong>etcd</strong>. In the end, it is a core component of Kubernetes; there nothing wrong with learning more about it.
-Just to let you know, don&rsquo;t use the internal <strong>etcd</strong> for a user application (like the one we want to install here); it is not meant for that.</p><p>The tutorial linked above suggests we use the <a href=https://github.com/coreos/etcd-operator>etcd-operator</a> and use <a href=https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml>https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml</a> to create our etcd cluster.</p><blockquote><p>Great, an operator nothing more simple than that&mldr;</p></blockquote><p>Slow down; the <code>etcd-operator</code> repo was archived more than a year ago; even if it could work for a case like this, we don&rsquo;t want to install an operator that is not maintained anymore, so let&rsquo;s see how to deploy it manually.</p><p>After searching around, I ended up on this documentation page <a href=https://etcd.io/docs/v3.4/op-guide/container/#docker>https://etcd.io/docs/v3.4/op-guide/container/#docker</a> that shows how to deploy, etcd with a single node configuration; prefect is what we need here.</p><p>Basically we need to port the command showed in the link in a manifest for kubernetes:</p><p><em>docker run from etcd documentation</em></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>docker run <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -p 2379:2379 <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  -p 2380:2380 <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --volume<span style=color:#f92672>=</span><span style=color:#e6db74>${</span>DATA_DIR<span style=color:#e6db74>}</span>:/etcd-data <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --name etcd <span style=color:#e6db74>${</span>REGISTRY<span style=color:#e6db74>}</span>:latest <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  /usr/local/bin/etcd <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --data-dir<span style=color:#f92672>=</span>/etcd-data --name node1 <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --initial-advertise-peer-urls http://<span style=color:#e6db74>${</span>NODE1<span style=color:#e6db74>}</span>:2380 --listen-peer-urls http://0.0.0.0:2380 <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --advertise-client-urls http://<span style=color:#e6db74>${</span>NODE1<span style=color:#e6db74>}</span>:2379 --listen-client-urls http://0.0.0.0:2379 <span style=color:#ae81ff>\
-</span></span></span><span style=display:flex><span><span style=color:#ae81ff></span>  --initial-cluster node1<span style=color:#f92672>=</span>http://<span style=color:#e6db74>${</span>NODE1<span style=color:#e6db74>}</span>:2380
-</span></span></code></pre></div><p>Manifest file <em>etc-sts.yml</em></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>StatefulSet</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>app.kubernetes.io/name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>serviceName</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>replicas</span>: <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>updateStrategy</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>OnDelete</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>app.kubernetes.io/name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
-</span></span><span style=display:flex><span>        <span style=color:#f92672>app.kubernetes.io/name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
-</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>image</span>: <span style=color:#ae81ff>gcr.io/etcd-development/etcd:latest</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>imagePullPolicy</span>: <span style=color:#ae81ff>IfNotPresent</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>command</span>:
-</span></span><span style=display:flex><span>          - <span style=color:#ae81ff>/usr/local/bin/etcd</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>env</span>:
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_NAME</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>value</span>: <span style=color:#ae81ff>node1</span>
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_DATA_DIR</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>value</span>: <span style=color:#ae81ff>/etcd-data</span>
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_LISTEN_PEER_URLS</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>value</span>: <span style=color:#ae81ff>http://0.0.0.0:2380</span>
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_LISTEN_CLIENT_URLS</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>value</span>: <span style=color:#ae81ff>http://0.0.0.0:2379</span>
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_INITIAL_ADVERTISE_PEER_URLS</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>value</span>: <span style=color:#ae81ff>http://0.0.0.0:2380</span>
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_ADVERTISE_CLIENT_URLS</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>value</span>: <span style=color:#ae81ff>http://0.0.0.0:2379</span>
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_INITIAL_CLUSTER</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>value</span>: <span style=color:#e6db74>&#34;node1=http://0.0.0.0:2380&#34;</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>volumeMounts</span>:
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>data</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>mountPath</span>: <span style=color:#ae81ff>/etcd-data</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>ports</span>:
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>2379</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>client</span>
-</span></span><span style=display:flex><span>            - <span style=color:#f92672>containerPort</span>: <span style=color:#ae81ff>2380</span>
-</span></span><span style=display:flex><span>              <span style=color:#f92672>name</span>: <span style=color:#ae81ff>peer</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>volumeClaimTemplates</span>:
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>        <span style=color:#f92672>name</span>: <span style=color:#ae81ff>data</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>        <span style=color:#f92672>accessModes</span>:
-</span></span><span style=display:flex><span>          - <span style=color:#ae81ff>ReadWriteOnce</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>resources</span>:
-</span></span><span style=display:flex><span>          <span style=color:#f92672>requests</span>:
-</span></span><span style=display:flex><span>            <span style=color:#f92672>storage</span>: <span style=color:#ae81ff>1Gi</span> <span style=color:#75715e># we don&#39;t need much space to store DNS information</span>
-</span></span></code></pre></div><p>We&rsquo;re going to use a <code>StatefulSet</code> because <code>etcd</code> is a stateful app and needs a volume to persist its data. Rather than the classic <code>Deploy</code> with a <code>StatefulSet</code> we&rsquo;re certain that the generated pod will always receive the same name, and the volume attached to it will always be the same. <a href=https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/>More on the StatefulSet</a></p><p>The only noticeable difference between the <code>docker run ...</code> command and this manifest file is that we&rsquo;re using environment variables instead of configuration flags. I had some trouble getting the flags working, and I like more the environment variables, anyway; here a list of <a href=https://etcd.io/docs/v3.4/op-guide/configuration/>etcd configuration flags</a> with the matching variable.</p><p>Now, in order to expose <code>etcd</code> to the other applications in the cluster we need to create a <code>Service</code> too:</p><p><em>etc-service.yml</em></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>labels</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>app.kubernetes.io/name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>port</span>: <span style=color:#ae81ff>2379</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>2379</span>   
-</span></span><span style=display:flex><span>      <span style=color:#f92672>name</span>: <span style=color:#ae81ff>client</span>
-</span></span><span style=display:flex><span>    - <span style=color:#f92672>port</span>: <span style=color:#ae81ff>2380</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>targetPort</span>: <span style=color:#ae81ff>2380</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>name</span>: <span style=color:#ae81ff>peer</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>app.kubernetes.io/name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span></code></pre></div><p>Nothing special here, but this completes the manifest needed for our etcd instance.</p><h2 id=install-coredns>Install CoreDNS<a hidden class=anchor aria-hidden=true href=#install-coredns>#</a></h2><p>Now that we have our <strong>etcd</strong>, we can continue with the tutorial and install our custom version of CoreDSN. You can use <code>helm</code> to install it, or if you want a more instructive approach, you can use <code>helm template</code> to render the file and applying them manually or with kustomize. In this way, you can check them individually to see what the chart will create in your cluster.</p><p>Since my homelab is a way to learn more about Kubernetes, I choose to render the file with <code>helm template</code> and use <a href=https://kustomize.io/>kustomize</a> to apply them later.</p><p>Whichever way you choose, the important part is to set a couple of options inside the <code>values.yml</code> file correctly.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#75715e># if you don&#39;t have RBAC enabled on your cluster, I think you can set this to false</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>rbac</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>create</span>: <span style=color:#66d9ef>true</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#75715e># isClusterService specifies whether the chart should be deployed as cluster-service or regular k8s app.</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>isClusterService</span>: <span style=color:#66d9ef>true</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#f92672>servers</span>:
-</span></span><span style=display:flex><span>- <span style=color:#f92672>zones</span>:  
-</span></span><span style=display:flex><span>  - <span style=color:#f92672>zone</span>: <span style=color:#ae81ff>.</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>port</span>: <span style=color:#ae81ff>53</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>plugins</span>:  
-</span></span><span style=display:flex><span>  <span style=color:#ae81ff>...</span>
-</span></span><span style=display:flex><span>  <span style=color:#75715e># all other plugins</span>
-</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>forward</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>parameters</span>: <span style=color:#ae81ff>. 8.8.8.8:53</span> <span style=color:#75715e># tells where to forward all the DNS requests that CoreDNS can&#39;t solve</span>
-</span></span><span style=display:flex><span>  - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>etcd</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>parameters</span>: <span style=color:#ae81ff>diomedet.internal</span> <span style=color:#75715e># insert your domain here</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>configBlock</span>: |-<span style=color:#e6db74>
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      stubzones
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      path /skydns
-</span></span></span><span style=display:flex><span><span style=color:#e6db74>      endpoint http://etcd:2379</span>      
-</span></span></code></pre></div><p>The most important part is the last one, we&rsquo;re going to configure the <code>etcd</code> plugin and tell <strong>CoreDNS</strong> to look inside the <code>http://etcd:2379</code> to find the information about the domain <code>diomedet.internal</code> (this is my internal domain)</p><p>Also, the <code>forward</code> part is important; it tells CoreDNS where to redirect all the DNS that it can&rsquo;t solve. Later on, I&rsquo;ll explain why it is crucial.</p><p>With these values, we can run the command.</p><p><code>helm template custom coredns/coredns --output-dir . --values values.yaml</code></p><p>(custom is the name of my release, then it&rsquo;ll turn out in <code>custom-coredns</code>)</p><p>Helm will create a folder <code>coredns/template</code> with five files in it:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>coredns/templates
-</span></span><span style=display:flex><span>├── clusterrole.yaml
-</span></span><span style=display:flex><span>├── clusterrolebinding.yaml
-</span></span><span style=display:flex><span>├── configmap.yaml
-</span></span><span style=display:flex><span>├── deployment.yaml
-</span></span><span style=display:flex><span>└── service.yaml
-</span></span></code></pre></div><p>Now the only thing we&rsquo;ve to do is to <code>kubectl apply</code> these files, and we&rsquo;ll end up with a working CoreDNS instance. Working but still not reachable outside the cluster, if you have <a href=https://metallb.universe.tf/>MetalLB</a> configured, you can change the <code>ServiceType</code> from <code>ClusterIP</code> to <code>LoadBalancer</code> to get an IP.
-I haven&rsquo;t this feature in my cluster yet, so for now, I&rsquo;m going to use the <code>NodePort</code> type; this allows me to use a port of my node and point it to the service.</p><p>With <code>kustomize</code>, there is the concept of patches, so I can create a patch that will modify the <code>service.yaml</code> file without directly touching it. I prefer this way, so if I have to re-run <code>helm template ...</code> I don&rsquo;t have to mind any modification I could have made because kustomize will patch everything.</p><p><code>patches/service.yaml</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Service</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>custom-coredns</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>type</span>: <span style=color:#ae81ff>NodePort</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>ports</span>:
-</span></span><span style=display:flex><span>  - {<span style=color:#f92672>port: 53, protocol: UDP, name: udp-53, nodePort</span>: <span style=color:#ae81ff>30053</span>}
-</span></span><span style=display:flex><span>  - {<span style=color:#f92672>port: 53, protocol: TCP, name: tcp-53, nodePort</span>: <span style=color:#ae81ff>30053</span>}
-</span></span></code></pre></div><p>Here I tell Kubernetes to use the port <code>30053</code> for both <code>UDP</code> and <code>TCP</code>. With the <code>NodePort</code>, you can use ports from 30000 to 32767 if you do not modify it.</p><p>To wrap it up, here my <code>kustomization.yml</code> file:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Kustomization</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>kustomize.config.k8s.io/v1beta1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>namespace</span>: <span style=color:#ae81ff>custom-coredns</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>resources</span>:
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>templates/clusterrole.yaml</span>
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>templates/clusterrolebinding.yaml</span>
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>templates/configmap.yaml</span>
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>templates/deployment.yaml</span>
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>templates/service.yaml</span>
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>etcd-sts.yml</span>
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>etcd-service.yml</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>patchesStrategicMerge</span>:
-</span></span><span style=display:flex><span>- <span style=color:#ae81ff>patches/service.yaml</span>
-</span></span></code></pre></div><p>If you followed my path, you should have all the files to make it work, anyway. If you&rsquo;ve installed the helm chart directly, you can always change the service manifest directly on Kubernetes. You can even set the <code>serviceType</code> in the <code>values.yaml</code> file, but I didn&rsquo;t find a way to specify the <code>nodePort</code> to use, so I decided to go with the patch.</p><h2 id=finally-install-external-dns>Finally, install external-dns<a hidden class=anchor aria-hidden=true href=#finally-install-external-dns>#</a></h2><p>Now we can finally install the instance of <strong>external-dns</strong> that will monitor the <code>Ingress</code> created with our internal domain.</p><p>I have RBAC enabled on my cluster, so my manifest look like this:</p><p><em>external-dns.yml</em></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>---
-</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>rbac.authorization.k8s.io/v1beta1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterRole</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>rules</span>:
-</span></span><span style=display:flex><span>- <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;services&#34;</span>,<span style=color:#e6db74>&#34;endpoints&#34;</span>,<span style=color:#e6db74>&#34;pods&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#f92672>verbs</span>: [<span style=color:#e6db74>&#34;get&#34;</span>,<span style=color:#e6db74>&#34;watch&#34;</span>,<span style=color:#e6db74>&#34;list&#34;</span>]
-</span></span><span style=display:flex><span>- <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;extensions&#34;</span>,<span style=color:#e6db74>&#34;networking.k8s.io&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;ingresses&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#f92672>verbs</span>: [<span style=color:#e6db74>&#34;get&#34;</span>,<span style=color:#e6db74>&#34;watch&#34;</span>,<span style=color:#e6db74>&#34;list&#34;</span>]
-</span></span><span style=display:flex><span>- <span style=color:#f92672>apiGroups</span>: [<span style=color:#e6db74>&#34;&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#f92672>resources</span>: [<span style=color:#e6db74>&#34;nodes&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#f92672>verbs</span>: [<span style=color:#e6db74>&#34;list&#34;</span>]
-</span></span><span style=display:flex><span>---
-</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>rbac.authorization.k8s.io/v1beta1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterRoleBinding</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>external-dns-viewer</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>roleRef</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>apiGroup</span>: <span style=color:#ae81ff>rbac.authorization.k8s.io</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ClusterRole</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>subjects</span>:
-</span></span><span style=display:flex><span>- <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ServiceAccount</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>namespace</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>---
-</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>v1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>ServiceAccount</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>namespace</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>---
-</span></span><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>apps/v1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Deployment</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>strategy</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>type</span>: <span style=color:#ae81ff>Recreate</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>selector</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>matchLabels</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>app</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>template</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>labels</span>:
-</span></span><span style=display:flex><span>        <span style=color:#f92672>app</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>serviceAccountName</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>containers</span>:
-</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>external-dns</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>image</span>: <span style=color:#ae81ff>k8s.gcr.io/external-dns/external-dns:v0.7.6</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>args</span>:
-</span></span><span style=display:flex><span>        - --<span style=color:#ae81ff>source=ingress</span>
-</span></span><span style=display:flex><span>        - --<span style=color:#ae81ff>provider=coredns</span>
-</span></span><span style=display:flex><span>        - --<span style=color:#ae81ff>log-level=debug</span> <span style=color:#75715e># debug only</span>
-</span></span><span style=display:flex><span>        - --<span style=color:#ae81ff>domain-filter=diomedet.internal</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>env</span>:
-</span></span><span style=display:flex><span>        - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>ETCD_URLS</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>value</span>: <span style=color:#ae81ff>http://etcd.custom-coredns:2379</span>
-</span></span></code></pre></div><p>If you don&rsquo;t have RBAC enable, you can use only the <code>Deployment</code> manifest.</p><p>This is the most straightforward part, just set the correct <code>ETCD_URLS</code> with the correct value, and you&rsquo;re good to go. I have deployed my <strong>external-dns</strong> in a namespace different than the <strong>etcd</strong> one, so in the <code>ETCD_URLS</code> variable, I have to specify the service with the namespace too <code>http://etcd.custom-coredns:2379</code></p><p>Once you applied your manifest you can create an ingress with the internal domain you chose, in my case is something like:</p><p><em>vault/ingress.yml</em></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>networking.k8s.io/v1beta1</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Ingress</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>annotations</span>:
-</span></span><span style=display:flex><span>    <span style=color:#f92672>kubernetes.io/ingress.class</span>: <span style=color:#ae81ff>nginx</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>vault-ui-internal</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>namespace</span>: <span style=color:#ae81ff>vault</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
-</span></span><span style=display:flex><span>  <span style=color:#f92672>rules</span>:
-</span></span><span style=display:flex><span>  - <span style=color:#f92672>host</span>: <span style=color:#ae81ff>vault.diomedet.internal</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>http</span>:
-</span></span><span style=display:flex><span>      <span style=color:#f92672>paths</span>:
-</span></span><span style=display:flex><span>      - <span style=color:#f92672>backend</span>:
-</span></span><span style=display:flex><span>          <span style=color:#f92672>serviceName</span>: <span style=color:#ae81ff>vault</span>
-</span></span><span style=display:flex><span>          <span style=color:#f92672>servicePort</span>: <span style=color:#ae81ff>http</span>
-</span></span><span style=display:flex><span>        <span style=color:#f92672>path</span>: <span style=color:#ae81ff>/</span>
-</span></span></code></pre></div><p>After you create an Ingress with your internal domain on the external-dns pod, you should see a log like the following one:</p><p><code>level=debug msg="Endpoints generated from ingress: vault/vault-ui-internal: [vault.diomedet.internal 0 IN A 10.10.5.123 []]"</code></p><p><code>10.10.5.123</code> is the IP address of my Kubernetes cluster, it&rsquo;s called &ldquo;Scyther&rdquo;, the Pokédex number of Scyther is #123, so here explained my IP, not that you asked, but here it is anyway :P</p><p>Now, if I use <code>dig</code> to check the name resolution, it should work correctly:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ dig @10.10.5.123 -p <span style=color:#ae81ff>30053</span> vault.diomedet.internal
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>; &lt;&lt;&gt;&gt; DiG 9.11.3-1ubuntu1.13-Ubuntu &lt;&lt;&gt;&gt; @10.10.5.123 -p <span style=color:#ae81ff>30053</span> vault.diomedet.internal
-</span></span><span style=display:flex><span>; <span style=color:#f92672>(</span><span style=color:#ae81ff>1</span> server found<span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>;; global options: +cmd
-</span></span><span style=display:flex><span>;; Got answer:
-</span></span><span style=display:flex><span>;; -&gt;&gt;HEADER<span style=color:#e6db74>&lt;&lt;- opco</span>de: QUERY, status: NOERROR, id: <span style=color:#ae81ff>5546</span>
-</span></span><span style=display:flex><span>;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>;; WARNING: recursion requested but not available
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>;; OPT PSEUDOSECTION:
-</span></span><span style=display:flex><span>; EDNS: version: 0, flags:; udp: <span style=color:#ae81ff>4096</span>
-</span></span><span style=display:flex><span>; COOKIE: bc40278d825e2b16 <span style=color:#f92672>(</span>echoed<span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>;; QUESTION SECTION:
-</span></span><span style=display:flex><span>;vault.diomedet.internal.       IN      A
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>;; ANSWER SECTION:
-</span></span><span style=display:flex><span>vault.diomedet.internal. <span style=color:#ae81ff>30</span>     IN      A       10.10.5.123
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>;; Query time: <span style=color:#ae81ff>3</span> msec
-</span></span><span style=display:flex><span>;; SERVER: 10.10.5.123#30053<span style=color:#f92672>(</span>10.10.5.123<span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>;; WHEN: Sat May <span style=color:#ae81ff>08</span> 16:11:48 CEST <span style=color:#ae81ff>2021</span>
-</span></span><span style=display:flex><span>;; MSG SIZE  rcvd: <span style=color:#ae81ff>103</span>
-</span></span></code></pre></div><p>But if I run the <code>nslookup</code> command, I still get an error:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ nslookup vault.diomedet.internal
-</span></span><span style=display:flex><span>Server:         172.29.96.1
-</span></span><span style=display:flex><span>Address:        172.29.96.1#53
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>** server can<span style=color:#960050;background-color:#1e0010>&#39;</span>t find vault.diomedet.internal: NXDOMAIN
-</span></span></code></pre></div><p>This error appears because we still have to change the Pi-hole configurations.</p><h2 id=configure-pi-hole-to-use-our-new-dns-server>Configure Pi-hole to use our new DNS Server<a hidden class=anchor aria-hidden=true href=#configure-pi-hole-to-use-our-new-dns-server>#</a></h2><p>To configure Pi-hole, you need to return to DNS Setting tab <code>http://pihole.local/admin/settings.php?tab=dns</code>, uncheck all the &ldquo;Upstream DNS Servers&rdquo; and insert your custom one, in my case <code>10.10.5.123#300123</code> (the # is used to specify the port).</p><p><img loading=lazy src=/imgs/posts/kubernetes-external-dns-pihole/pihole-dns-updated.png alt="Pi-hole DNS Settings Updated"></p><p>Now, if you run the <code>nslookup</code> command again, you should end with the correct result:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>❯ nslookup vault.diomedet.internal
-</span></span><span style=display:flex><span>Server:         172.29.96.1
-</span></span><span style=display:flex><span>Address:        172.29.96.1#53
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>Non-authoritative answer:
-</span></span><span style=display:flex><span>Name:   vault.diomedet.internal
-</span></span><span style=display:flex><span>Address: 10.10.5.123
-</span></span></code></pre></div><p>Great! We can create as many Ingress with our internal domain as we want, and they will always be resolved to our cluster IP.</p><h2 id=conclusion>Conclusion<a hidden class=anchor aria-hidden=true href=#conclusion>#</a></h2><p>Unfortunately, our instance of <strong>CoreDNS</strong> will become a central point for our network in this scenario. If something happens to our cluster or the CoreDNS pod stops, we&rsquo;ll lose the ability to resolve domain names. I&rsquo;m still searching for a way to solve this problem and have a more reliable solution, but for now, I have to stick with this downside.</p><p>Do you remember the <code>forward</code> value that we set on the <code>values.yaml</code> for <strong>CoreDNS</strong>?</p><p>That option has become the only way to choose which DNS server we want to use to solve all the DNS requests that can&rsquo;t be solved internally and aren&rsquo;t blocked by Pi-hole. This is because if we check some of the &ldquo;Upstream DNS Server&rdquo;, we&rsquo;ll lose the ability to resolve our internal domain.</p><p>I have some ideas on how to solve that:</p><ul><li>A second Pi-hole that is going to be my &ldquo;Custom 2&rdquo; upstream DNS Server</li><li>An ingress that masks the IP of the DNS server I want to use, something like I&rsquo;ve done in a previous post <a href=https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/>Expose an external resource with a Kubernetes Ingress</a>. A mask is needed because if you insert <code>8.8.8.8</code> into the &ldquo;Custom 2&rdquo; field, Pi-hole will automatically check the Google server for you.</li></ul><p>But I haven&rsquo;t tested any of that, so, for today, this is it.</p><p>I&rsquo;m also looking for a way to have a certificate on my internal domain, so I don&rsquo;t get those annoying alerts when I&rsquo;m trying to access my apps via <code>HTTPS</code>.</p><p>I hope you&rsquo;ve found this article helpful. Stay tuned for future updates!</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://diomedet.com/tags/kubernetes/>kubernetes</a></li><li><a href=https://diomedet.com/tags/k8s/>k8s</a></li><li><a href=https://diomedet.com/tags/homelab/>homelab</a></li><li><a href=https://diomedet.com/tags/pi-hole/>pi-hole</a></li><li><a href=https://diomedet.com/tags/dns/>dns</a></li></ul><div class=share-buttons><a target=_blank rel="noopener noreferrer" aria-label="share Kubernetes, external-dns, Pi-hole and a custom domain on twitter" href="https://twitter.com/intent/tweet/?text=Kubernetes%2c%20external-dns%2c%20Pi-hole%20and%20a%20custom%20domain&url=https%3a%2f%2fdiomedet.com%2fposts%2fkubernetes-external-dns-pihole-and-a-custom-domain%2f&hashtags=kubernetes%2ck8s%2chomelab%2cpi-hole%2cdns"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM195.519 424.544c135.939.0 210.268-112.643 210.268-210.268.0-3.218.0-6.437-.153-9.502 14.406-10.421 26.973-23.448 36.935-38.314-13.18 5.824-27.433 9.809-42.452 11.648 15.326-9.196 26.973-23.602 32.49-40.92-14.252 8.429-30.038 14.56-46.896 17.931-13.487-14.406-32.644-23.295-53.946-23.295-40.767.0-73.87 33.104-73.87 73.87.0 5.824.613 11.494 1.992 16.858-61.456-3.065-115.862-32.49-152.337-77.241-6.284 10.881-9.962 23.601-9.962 37.088.0 25.594 13.027 48.276 32.95 61.456-12.107-.307-23.448-3.678-33.41-9.196v.92c0 35.862 25.441 65.594 59.311 72.49-6.13 1.686-12.72 2.606-19.464 2.606-4.751.0-9.348-.46-13.946-1.38 9.349 29.426 36.628 50.728 68.965 51.341-25.287 19.771-57.164 31.571-91.8 31.571-5.977.0-11.801-.306-17.625-1.073 32.337 21.15 71.264 33.41 112.95 33.41z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Kubernetes, external-dns, Pi-hole and a custom domain on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fdiomedet.com%2fposts%2fkubernetes-external-dns-pihole-and-a-custom-domain%2f&title=Kubernetes%2c%20external-dns%2c%20Pi-hole%20and%20a%20custom%20domain&summary=Kubernetes%2c%20external-dns%2c%20Pi-hole%20and%20a%20custom%20domain&source=https%3a%2f%2fdiomedet.com%2fposts%2fkubernetes-external-dns-pihole-and-a-custom-domain%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Kubernetes, external-dns, Pi-hole and a custom domain on reddit" href="https://reddit.com/submit?url=https%3a%2f%2fdiomedet.com%2fposts%2fkubernetes-external-dns-pihole-and-a-custom-domain%2f&title=Kubernetes%2c%20external-dns%2c%20Pi-hole%20and%20a%20custom%20domain"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Kubernetes, external-dns, Pi-hole and a custom domain on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fdiomedet.com%2fposts%2fkubernetes-external-dns-pihole-and-a-custom-domain%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Kubernetes, external-dns, Pi-hole and a custom domain on whatsapp" href="https://api.whatsapp.com/send?text=Kubernetes%2c%20external-dns%2c%20Pi-hole%20and%20a%20custom%20domain%20-%20https%3a%2f%2fdiomedet.com%2fposts%2fkubernetes-external-dns-pihole-and-a-custom-domain%2f"><svg viewBox="0 0 512 512"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a><a target=_blank rel="noopener noreferrer" aria-label="share Kubernetes, external-dns, Pi-hole and a custom domain on telegram" href="https://telegram.me/share/url?text=Kubernetes%2c%20external-dns%2c%20Pi-hole%20and%20a%20custom%20domain&url=https%3a%2f%2fdiomedet.com%2fposts%2fkubernetes-external-dns-pihole-and-a-custom-domain%2f"><svg viewBox="2 2 28 28"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></div></footer></article></main><footer class=footer><span>&copy; 2022 <a href=https://diomedet.com/>Diomede T.</a></span>
-<span>Powered by
-<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
-        <a href=https://git.io/hugopapermod rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)"><button class=top-link id=top-link type=button accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></button></a>
-<script>let menu=document.getElementById("menu");menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)},document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script></body></html>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Kubernetes, external-dns, Pi-hole and a custom domain</title>
+		<meta name="description" content="I am a developer and sometimes I write on this blog">
+		<link rel="alternate" href="/eleventy-base-blog/feed/feed.xml" type="application/atom+xml" title="Diomede T.">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+	--color-gray-90-alternate: #808080;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-alternate: var(--color-gray-90-alternate);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+		--color-gray-90-alternate: #a8a3a3;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+
+
+hr {
+	border: none;
+	border-bottom: 1px var(--text-color-alternate) dashed;
+	width: 50%;
+}
+
+blockquote {
+	border-left: 3px var(--text-color-alternate) solid;
+	padding-left: 2em;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/eleventy-base-blog/" class="home-link">Diomede T.</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/eleventy-base-blog/">Home</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/posts/">Archive</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/about/">About</a></li>
+					<li class="nav-item"><a href="/eleventy-base-blog/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			
+
+
+<h1 id="kubernetes-external-dns-pi-hole-and-a-custom-domain">Kubernetes, external-dns, Pi-hole and a custom domain</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-05-06">06 May 2021</time></li>
+	<li><a href="/eleventy-base-blog/tags/kubernetes/" class="post-tag">kubernetes</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/k8s/" class="post-tag">k8s</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/homelab/" class="post-tag">homelab</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/pi-hole/" class="post-tag">pi-hole</a>, </li>
+	<li><a href="/eleventy-base-blog/tags/dns/" class="post-tag">dns</a></li>
+</ul>
+
+<p>During these days, I'm tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.</p>
+<p>For example, I use <a href="https://www.vaultproject.io/">Vault</a> to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress</a>; right now, I only have Ingresses with my main domain <code>diomedet.com</code> but if I use it will be exposed to the whole internet, and I don't want that.</p>
+<p><a href="https://github.com/kubernetes-sigs/external-dns">external-dns</a> is my tool of choice to handle the synchronization between my Ingresses and the DNS provider; on my local network, I use <a href="https://pi-hole.net/">Pi-hole</a> to filter all my DNS request and to block some of them.</p>
+<p>Pi-hole already has a &quot;Local DNS Records&quot; section where you could list an arbitrary domain and point it to a specific IP inside or outside your network.
+So, if there is a way to make <strong>external-dns</strong> updates that list, what I'm trying to achieve would be possible with a bit of effort. Unfortunately, there is no way to update the list of local DNS records on Pi-hole programmatically at the moment of writing, so we've to find another way to do that.</p>
+<p>Messing around with the interface of Pi-hole, I've noticed that under &quot;Settings -&gt; DNS&quot; you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of &quot;Upstream DNS Servers&quot; there is also a list of custom upstream DNS servers:</p>
+<p><picture><source type="image/avif" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.avif 1266w"><source type="image/webp" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.webp 1266w"><img loading="lazy" decoding="async" src="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.png" alt="Pi-hole DNS Settings" width="1266" height="777"></picture></p>
+<p>So, the idea is to create a custom DNS server that can be updated by <strong>external-dns</strong> and used by Pi-hole as an <strong>upstream DNS server</strong>. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.</p>
+<p>Great, we've got a plan. Now it's time to make it real!</p>
+<h2 id="first-things-first-we-need-a-dns-server">First things first, we need a DNS server</h2>
+<p>Scouting between the providers supported by <strong>external-dns</strong> there a bunch of choices that can be self-hosted, something like <a href="https://www.powerdns.com/">PowerDNS</a> or <a href="https://coredns.io/">CoreDNS</a>, at this point I was like:</p>
+<blockquote>
+<p>&quot;mmh interesting, CoreDNS is the one used by Kubernetes internally must be a good choice, let's go with it.&quot;</p>
+</blockquote>
+<p>A colleague suggested using PowerDNS**, but I was already set on my path, so I stuck with <strong>CoreDNS</strong>.</p>
+<p>To be clear, it's not a wrong choice, but it might be a little overkill for this specific purpose but let's see what difficulties this path reserved for us.</p>
+<p>In the <strong>external-dns</strong> repo, there is a folder <code>docs/tutorial</code> with a markdown file for each supported provider (I think each didn't count), we're looking for the CoreDNS one: <a href="https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md">https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md</a></p>
+<p>It is a tutorial for minikube, but ignoring that part, we can use it for every Kubernetes cluster and bonus point, show us even how to install <strong>CoreDNS</strong>, great two birds with one stone.</p>
+<p>If you've opened the file, you can see from the very beginning that the birds are not two anymore but three. The more, the merrier, right, right?!</p>
+<p>If you haven't opened the link, let me recap that for you what we need to install:</p>
+<ul>
+<li>CoreDNS (obviously)</li>
+<li>etcd</li>
+<li>another instance of external-dns (you need an instance of external-dns for each dns provider you're going to support)</li>
+</ul>
+<h2 id="wait-why-we-need-etcd">Wait, why we need etcd?</h2>
+<p>We need etcd because this is the way how <strong>external-dns</strong> talks to <strong>CoreDNS</strong>, we have to create a section in the configuration of CoreDNS that tells him to read the value from a specific path on the <strong>etcd</strong> instance we're going to configure and external-dns will update the same path with the information about the Ingresses we're going to create with our internal domain.</p>
+<p><strong>Note:</strong> Before switching to <strong>etcd</strong> directly, <strong>CoreDNS</strong> was using <a href="https://github.com/skynetservices/skydns">SkyDNS</a> (a service built on top of etcd) to serve these kinds of request, so, in the manifest files, we're going to see you'll find some refuse of that implementation.</p>
+<h2 id="install-etcd">Install etcd</h2>
+<p>Let's get down to business and install <strong>etcd</strong>. In the end, it is a core component of Kubernetes; there nothing wrong with learning more about it.
+Just to let you know, don't use the internal <strong>etcd</strong> for a user application (like the one we want to install here); it is not meant for that.</p>
+<p>The tutorial linked above suggests we use the <a href="https://github.com/coreos/etcd-operator">etcd-operator</a> and use <a href="https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml">https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml</a> to create our etcd cluster.</p>
+<blockquote>
+<p>Great, an operator nothing more simple than that...</p>
+</blockquote>
+<p>Slow down; the <code>etcd-operator</code> repo was archived more than a year ago; even if it could work for a case like this, we don't want to install an operator that is not maintained anymore, so let's see how to deploy it manually.</p>
+<p>After searching around, I ended up on this documentation page <a href="https://etcd.io/docs/v3.4/op-guide/container/#docker">https://etcd.io/docs/v3.4/op-guide/container/#docker</a> that shows how to deploy, etcd with a single node configuration; prefect is what we need here.</p>
+<p>Basically we need to port the command showed in the link in a manifest for kubernetes:</p>
+<p><em>docker run from etcd documentation</em></p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">docker</span> run <span class="token punctuation">\</span>
+  <span class="token parameter variable">-p</span> <span class="token number">2379</span>:2379 <span class="token punctuation">\</span>
+  <span class="token parameter variable">-p</span> <span class="token number">2380</span>:2380 <span class="token punctuation">\</span>
+  <span class="token parameter variable">--volume</span><span class="token operator">=</span><span class="token variable">${DATA_DIR}</span>:/etcd-data <span class="token punctuation">\</span>
+  <span class="token parameter variable">--name</span> etcd <span class="token variable">${REGISTRY}</span>:latest <span class="token punctuation">\</span>
+  /usr/local/bin/etcd <span class="token punctuation">\</span>
+  --data-dir<span class="token operator">=</span>/etcd-data <span class="token parameter variable">--name</span> node1 <span class="token punctuation">\</span>
+  --initial-advertise-peer-urls http://<span class="token variable">${NODE1}</span>:2380 --listen-peer-urls http://0.0.0.0:2380 <span class="token punctuation">\</span>
+  --advertise-client-urls http://<span class="token variable">${NODE1}</span>:2379 --listen-client-urls http://0.0.0.0:2379 <span class="token punctuation">\</span>
+  --initial-cluster <span class="token assign-left variable">node1</span><span class="token operator">=</span>http://<span class="token variable">${NODE1}</span>:2380</code></pre>
+<p>Manifest file <em>etc-sts.yml</em></p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> StatefulSet
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> etcd
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> etcd
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> etcd
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
+  <span class="token key atrule">updateStrategy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> OnDelete
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> etcd
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> etcd
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> etcd
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> gcr.io/etcd<span class="token punctuation">-</span>development/etcd<span class="token punctuation">:</span>latest
+          <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> IfNotPresent
+          <span class="token key atrule">command</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> /usr/local/bin/etcd
+          <span class="token key atrule">env</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_NAME
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> node1
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_DATA_DIR
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> /etcd<span class="token punctuation">-</span>data
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_LISTEN_PEER_URLS
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//0.0.0.0<span class="token punctuation">:</span><span class="token number">2380</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_LISTEN_CLIENT_URLS
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//0.0.0.0<span class="token punctuation">:</span><span class="token number">2379</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_INITIAL_ADVERTISE_PEER_URLS
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//0.0.0.0<span class="token punctuation">:</span><span class="token number">2380</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_ADVERTISE_CLIENT_URLS
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//0.0.0.0<span class="token punctuation">:</span><span class="token number">2379</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_INITIAL_CLUSTER
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> <span class="token string">"node1=http://0.0.0.0:2380"</span>
+          <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> data
+              <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /etcd<span class="token punctuation">-</span>data
+          <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">2379</span>
+              <span class="token key atrule">name</span><span class="token punctuation">:</span> client
+            <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">2380</span>
+              <span class="token key atrule">name</span><span class="token punctuation">:</span> peer
+  <span class="token key atrule">volumeClaimTemplates</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> data
+      <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+        <span class="token key atrule">accessModes</span><span class="token punctuation">:</span>
+          <span class="token punctuation">-</span> ReadWriteOnce
+        <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+          <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+            <span class="token key atrule">storage</span><span class="token punctuation">:</span> 1Gi <span class="token comment"># we don't need much space to store DNS information</span></code></pre>
+<p>We're going to use a <code>StatefulSet</code> because <code>etcd</code> is a stateful app and needs a volume to persist its data. Rather than the classic <code>Deploy</code> with a <code>StatefulSet</code> we're certain that the generated pod will always receive the same name, and the volume attached to it will always be the same. <a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">More on the StatefulSet</a></p>
+<p>The only noticeable difference between the <code>docker run ...</code> command and this manifest file is that we're using environment variables instead of configuration flags. I had some trouble getting the flags working, and I like more the environment variables, anyway; here a list of <a href="https://etcd.io/docs/v3.4/op-guide/configuration/">etcd configuration flags</a> with the matching variable.</p>
+<p>Now, in order to expose <code>etcd</code> to the other applications in the cluster we need to create a <code>Service</code> too:</p>
+<p><em>etc-service.yml</em></p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> etcd
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> etcd
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">2379</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">2379</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> client
+    <span class="token punctuation">-</span> <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">2380</span>
+      <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> <span class="token number">2380</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> peer
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app.kubernetes.io/name</span><span class="token punctuation">:</span> etcd</code></pre>
+<p>Nothing special here, but this completes the manifest needed for our etcd instance.</p>
+<h2 id="install-coredns">Install CoreDNS</h2>
+<p>Now that we have our <strong>etcd</strong>, we can continue with the tutorial and install our custom version of CoreDSN. You can use <code>helm</code> to install it, or if you want a more instructive approach, you can use <code>helm template</code> to render the file and applying them manually or with kustomize. In this way, you can check them individually to see what the chart will create in your cluster.</p>
+<p>Since my homelab is a way to learn more about Kubernetes, I choose to render the file with <code>helm template</code> and use <a href="https://kustomize.io/">kustomize</a> to apply them later.</p>
+<p>Whichever way you choose, the important part is to set a couple of options inside the <code>values.yml</code> file correctly.</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token comment"># if you don't have RBAC enabled on your cluster, I think you can set this to false</span>
+<span class="token key atrule">rbac</span><span class="token punctuation">:</span>
+  <span class="token key atrule">create</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+
+<span class="token comment"># isClusterService specifies whether the chart should be deployed as cluster-service or regular k8s app.</span>
+<span class="token key atrule">isClusterService</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+
+<span class="token key atrule">servers</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">zones</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">zone</span><span class="token punctuation">:</span> .
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">53</span>
+  <span class="token key atrule">plugins</span><span class="token punctuation">:</span>
+  <span class="token punctuation">...</span>
+  <span class="token comment"># all other plugins</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> forward
+    <span class="token key atrule">parameters</span><span class="token punctuation">:</span> . 8.8.8.8<span class="token punctuation">:</span><span class="token number">53</span> <span class="token comment"># tells where to forward all the DNS requests that CoreDNS can't solve</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> etcd
+    <span class="token key atrule">parameters</span><span class="token punctuation">:</span> diomedet.internal <span class="token comment"># insert your domain here</span>
+    <span class="token key atrule">configBlock</span><span class="token punctuation">:</span> <span class="token punctuation">|</span><span class="token punctuation">-</span>
+      stubzones
+      path /skydns
+      endpoint http<span class="token punctuation">:</span>//etcd<span class="token punctuation">:</span><span class="token number">2379</span></code></pre>
+<p>The most important part is the last one, we're going to configure the <code>etcd</code> plugin and tell <strong>CoreDNS</strong> to look inside the <code>http://etcd:2379</code> to find the information about the domain <code>diomedet.internal</code> (this is my internal domain)</p>
+<p>Also, the <code>forward</code> part is important; it tells CoreDNS where to redirect all the DNS that it can't solve. Later on, I'll explain why it is crucial.</p>
+<p>With these values, we can run the command.</p>
+<p><code>helm template custom coredns/coredns --output-dir . --values values.yaml</code></p>
+<p>(custom is the name of my release, then it'll turn out in <code>custom-coredns</code>)</p>
+<p>Helm will create a folder <code>coredns/template</code> with five files in it:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">coredns/templates
+├── clusterrole.yaml
+├── clusterrolebinding.yaml
+├── configmap.yaml
+├── deployment.yaml
+└── service.yaml</code></pre>
+<p>Now the only thing we've to do is to <code>kubectl apply</code> these files, and we'll end up with a working CoreDNS instance. Working but still not reachable outside the cluster, if you have <a href="https://metallb.universe.tf/">MetalLB</a> configured, you can change the <code>ServiceType</code> from <code>ClusterIP</code> to <code>LoadBalancer</code> to get an IP.
+I haven't this feature in my cluster yet, so for now, I'm going to use the <code>NodePort</code> type; this allows me to use a port of my node and point it to the service.</p>
+<p>With <code>kustomize</code>, there is the concept of patches, so I can create a patch that will modify the <code>service.yaml</code> file without directly touching it. I prefer this way, so if I have to re-run <code>helm template ...</code> I don't have to mind any modification I could have made because kustomize will patch everything.</p>
+<p><code>patches/service.yaml</code></p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> custom<span class="token punctuation">-</span>coredns
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">type</span><span class="token punctuation">:</span> NodePort
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">{</span><span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">53</span><span class="token punctuation">,</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> UDP<span class="token punctuation">,</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> udp<span class="token punctuation">-</span><span class="token number">53</span><span class="token punctuation">,</span> <span class="token key atrule">nodePort</span><span class="token punctuation">:</span> <span class="token number">30053</span><span class="token punctuation">}</span>
+  <span class="token punctuation">-</span> <span class="token punctuation">{</span><span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">53</span><span class="token punctuation">,</span> <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP<span class="token punctuation">,</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> tcp<span class="token punctuation">-</span><span class="token number">53</span><span class="token punctuation">,</span> <span class="token key atrule">nodePort</span><span class="token punctuation">:</span> <span class="token number">30053</span><span class="token punctuation">}</span></code></pre>
+<p>Here I tell Kubernetes to use the port <code>30053</code> for both <code>UDP</code> and <code>TCP</code>. With the <code>NodePort</code>, you can use ports from 30000 to 32767 if you do not modify it.</p>
+<p>To wrap it up, here my <code>kustomization.yml</code> file:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">kind</span><span class="token punctuation">:</span> Kustomization
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> kustomize.config.k8s.io/v1beta1
+<span class="token key atrule">namespace</span><span class="token punctuation">:</span> custom<span class="token punctuation">-</span>coredns
+<span class="token key atrule">resources</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> templates/clusterrole.yaml
+<span class="token punctuation">-</span> templates/clusterrolebinding.yaml
+<span class="token punctuation">-</span> templates/configmap.yaml
+<span class="token punctuation">-</span> templates/deployment.yaml
+<span class="token punctuation">-</span> templates/service.yaml
+<span class="token punctuation">-</span> etcd<span class="token punctuation">-</span>sts.yml
+<span class="token punctuation">-</span> etcd<span class="token punctuation">-</span>service.yml
+<span class="token key atrule">patchesStrategicMerge</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> patches/service.yaml</code></pre>
+<p>If you followed my path, you should have all the files to make it work, anyway. If you've installed the helm chart directly, you can always change the service manifest directly on Kubernetes. You can even set the <code>serviceType</code> in the <code>values.yaml</code> file, but I didn't find a way to specify the <code>nodePort</code> to use, so I decided to go with the patch.</p>
+<h2 id="finally-install-external-dns">Finally, install external-dns</h2>
+<p>Now we can finally install the instance of <strong>external-dns</strong> that will monitor the <code>Ingress</code> created with our internal domain.</p>
+<p>I have RBAC enabled on my cluster, so my manifest look like this:</p>
+<p><em>external-dns.yml</em></p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1beta1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">]</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"services"</span><span class="token punctuation">,</span><span class="token string">"endpoints"</span><span class="token punctuation">,</span><span class="token string">"pods"</span><span class="token punctuation">]</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"get"</span><span class="token punctuation">,</span><span class="token string">"watch"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">]</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"extensions"</span><span class="token punctuation">,</span><span class="token string">"networking.k8s.io"</span><span class="token punctuation">]</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"ingresses"</span><span class="token punctuation">]</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"get"</span><span class="token punctuation">,</span><span class="token string">"watch"</span><span class="token punctuation">,</span><span class="token string">"list"</span><span class="token punctuation">]</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">]</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"nodes"</span><span class="token punctuation">]</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"list"</span><span class="token punctuation">]</span>
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1beta1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns<span class="token punctuation">-</span>viewer
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">strategy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> Recreate
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">serviceAccountName</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> external<span class="token punctuation">-</span>dns
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> k8s.gcr.io/external<span class="token punctuation">-</span>dns/external<span class="token punctuation">-</span>dns<span class="token punctuation">:</span>v0.7.6
+        <span class="token key atrule">args</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>source=ingress
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>provider=coredns
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>log<span class="token punctuation">-</span>level=debug <span class="token comment"># debug only</span>
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>domain<span class="token punctuation">-</span>filter=diomedet.internal
+        <span class="token key atrule">env</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> ETCD_URLS
+          <span class="token key atrule">value</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//etcd.custom<span class="token punctuation">-</span>coredns<span class="token punctuation">:</span><span class="token number">2379</span></code></pre>
+<p>If you don't have RBAC enable, you can use only the <code>Deployment</code> manifest.</p>
+<p>This is the most straightforward part, just set the correct <code>ETCD_URLS</code> with the correct value, and you're good to go. I have deployed my <strong>external-dns</strong> in a namespace different than the <strong>etcd</strong> one, so in the <code>ETCD_URLS</code> variable, I have to specify the service with the namespace too <code>http://etcd.custom-coredns:2379</code></p>
+<p>Once you applied your manifest you can create an ingress with the internal domain you chose, in my case is something like:</p>
+<p><em>vault/ingress.yml</em></p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> networking.k8s.io/v1beta1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">kubernetes.io/ingress.class</span><span class="token punctuation">:</span> nginx
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> vault<span class="token punctuation">-</span>ui<span class="token punctuation">-</span>internal
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> vault
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">rules</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> vault.diomedet.internal
+    <span class="token key atrule">http</span><span class="token punctuation">:</span>
+      <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">backend</span><span class="token punctuation">:</span>
+          <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> vault
+          <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> http
+        <span class="token key atrule">path</span><span class="token punctuation">:</span> /</code></pre>
+<p>After you create an Ingress with your internal domain on the external-dns pod, you should see a log like the following one:</p>
+<p><code>level=debug msg=&quot;Endpoints generated from ingress: vault/vault-ui-internal: [vault.diomedet.internal 0 IN A  10.10.5.123 []]&quot;</code></p>
+<p><code>10.10.5.123</code> is the IP address of my Kubernetes cluster, it's called &quot;Scyther&quot;, the Pokédex number of Scyther is #123, so here explained my IP, not that you asked, but here it is anyway :P</p>
+<p>Now, if I use <code>dig</code> to check the name resolution, it should work correctly:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">❯ <span class="token function">dig</span> @10.10.5.123 <span class="token parameter variable">-p</span> <span class="token number">30053</span> vault.diomedet.internal
+
+<span class="token punctuation">;</span> <span class="token operator">&lt;&lt;</span><span class="token operator">>></span> DiG <span class="token number">9.11</span>.3-1ubuntu1.13-Ubuntu <span class="token operator">&lt;&lt;</span><span class="token operator">>></span> @10.10.5.123 <span class="token parameter variable">-p</span> <span class="token number">30053</span> vault.diomedet.internal
+<span class="token punctuation">;</span> <span class="token punctuation">(</span><span class="token number">1</span> server found<span class="token punctuation">)</span>
+<span class="token punctuation">;</span><span class="token punctuation">;</span> global options: +cmd
+<span class="token punctuation">;</span><span class="token punctuation">;</span> Got answer:
+<span class="token punctuation">;</span><span class="token punctuation">;</span> -<span class="token operator">>></span>HEADER<span class="token operator">&lt;&lt;-</span> opcode: QUERY, status: NOERROR, id: <span class="token number">5546</span>
+<span class="token punctuation">;</span><span class="token punctuation">;</span> flags: qr aa rd<span class="token punctuation">;</span> QUERY: <span class="token number">1</span>, ANSWER: <span class="token number">1</span>, AUTHORITY: <span class="token number">0</span>, ADDITIONAL: <span class="token number">1</span>
+<span class="token punctuation">;</span><span class="token punctuation">;</span> WARNING: recursion requested but not available
+
+<span class="token punctuation">;</span><span class="token punctuation">;</span> OPT PSEUDOSECTION:
+<span class="token punctuation">;</span> EDNS: version: <span class="token number">0</span>, flags:<span class="token punctuation">;</span> udp: <span class="token number">4096</span>
+<span class="token punctuation">;</span> COOKIE: bc40278d825e2b16 <span class="token punctuation">(</span>echoed<span class="token punctuation">)</span>
+<span class="token punctuation">;</span><span class="token punctuation">;</span> QUESTION SECTION:
+<span class="token punctuation">;</span>vault.diomedet.internal.       IN      A
+
+<span class="token punctuation">;</span><span class="token punctuation">;</span> ANSWER SECTION:
+vault.diomedet.internal. <span class="token number">30</span>     IN      A       <span class="token number">10.10</span>.5.123
+
+<span class="token punctuation">;</span><span class="token punctuation">;</span> Query time: <span class="token number">3</span> msec
+<span class="token punctuation">;</span><span class="token punctuation">;</span> SERVER: <span class="token number">10.10</span>.5.123<span class="token comment">#30053(10.10.5.123)</span>
+<span class="token punctuation">;</span><span class="token punctuation">;</span> WHEN: Sat May 08 <span class="token number">16</span>:11:48 CEST <span class="token number">2021</span>
+<span class="token punctuation">;</span><span class="token punctuation">;</span> MSG SIZE  rcvd: <span class="token number">103</span></code></pre>
+<p>But if I run the <code>nslookup</code> command, I still get an error:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">❯ <span class="token function">nslookup</span> vault.diomedet.internal
+Server:         <span class="token number">172.29</span>.96.1
+Address:        <span class="token number">172.29</span>.96.1<span class="token comment">#53</span>
+
+** server can't <span class="token function">find</span> vault.diomedet.internal: NXDOMAIN</code></pre>
+<p>This error appears because we still have to change the Pi-hole configurations.</p>
+<h2 id="configure-pi-hole-to-use-our-new-dns-server">Configure Pi-hole to use our new DNS Server</h2>
+<p>To configure Pi-hole, you need to return to DNS Setting tab <code>http://pihole.local/admin/settings.php?tab=dns</code>, uncheck all the &quot;Upstream DNS Servers&quot; and insert your custom one, in my case <code>10.10.5.123#300123</code> (the # is used to specify the port).</p>
+<p><picture><source type="image/avif" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.avif 1268w"><source type="image/webp" srcset="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.webp 1268w"><img loading="lazy" decoding="async" src="/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.png" alt="Pi-hole DNS Settings Updated" width="1268" height="770"></picture></p>
+<p>Now, if you run the <code>nslookup</code> command again, you should end with the correct result:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">❯ <span class="token function">nslookup</span> vault.diomedet.internal
+Server:         <span class="token number">172.29</span>.96.1
+Address:        <span class="token number">172.29</span>.96.1<span class="token comment">#53</span>
+
+Non-authoritative answer:
+Name:   vault.diomedet.internal
+Address: <span class="token number">10.10</span>.5.123</code></pre>
+<p>Great! We can create as many Ingress with our internal domain as we want, and they will always be resolved to our cluster IP.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Unfortunately, our instance of <strong>CoreDNS</strong> will become a central point for our network in this scenario. If something happens to our cluster or the CoreDNS pod stops, we'll lose the ability to resolve domain names. I'm still searching for a way to solve this problem and have a more reliable solution, but for now, I have to stick with this downside.</p>
+<p>Do you remember the <code>forward</code> value that we set on the <code>values.yaml</code> for <strong>CoreDNS</strong>?</p>
+<p>That option has become the only way to choose which DNS server we want to use to solve all the DNS requests that can't be solved internally and aren't blocked by Pi-hole. This is because if we check some of the &quot;Upstream DNS Server&quot;, we'll lose the ability to resolve our internal domain.</p>
+<p>I have some ideas on how to solve that:</p>
+<ul>
+<li>A second Pi-hole that is going to be my &quot;Custom 2&quot; upstream DNS Server</li>
+<li>An ingress that masks the IP of the DNS server I want to use, something like I've done in a previous post <a href="https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/">Expose an external resource with a Kubernetes Ingress</a>. A mask is needed because if you insert <code>8.8.8.8</code> into the &quot;Custom 2&quot; field, Pi-hole will automatically check the Google server for you.</li>
+</ul>
+<p>But I haven't tested any of that, so, for today, this is it.</p>
+<p>I'm also looking for a way to have a certificate on my internal domain, so I don't get those annoying alerts when I'm trying to access my apps via <code>HTTPS</code>.</p>
+<p>I hope you've found this article helpful. Stay tuned for future updates!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/eleventy-base-blog/posts/expose-an-external-resource-with-a-kubernetes-ingress/">Expose an external resource with a Kubernetes Ingress</a></li><li class="links-nextprev-next">Next →<br><a href="/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/">Forecastle: my services Dashboard of choice</a></li>
+</ul>
+
+		</main>
+
+		<footer>
+			<p>
+				<em>Built with <a href="https://www.11ty.dev/">Eleventy v3.1.2</a></em>
+			</p>
+		</footer>
+
+	</body>
+</html>

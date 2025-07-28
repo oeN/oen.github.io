@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="pretty-atom-feed.xsl" type="text/xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>Diomede T. Blog</title>
+  <subtitle>My dusty corner of the interconnected world</subtitle>
+  <link href="https://diomedet.com/eleventy-base-blog/feed/feed.xml" rel="self" />
+  <link href="https://diomedet.com/eleventy-base-blog/" />
+  <updated>2025-07-24T18:30:00Z</updated>
+  <id>https://diomedet.com/eleventy-base-blog/</id>
+  <author>
+    <name>Diomede Tripicchio</name>
+  </author>
+  <entry>
+    <title>Writing for Myself</title>
+    <link href="https://diomedet.com/eleventy-base-blog/posts/2025-07-23-writing-for-myself/" />
+    <updated>2025-07-24T18:30:00Z</updated>
+    <id>https://diomedet.com/eleventy-base-blog/posts/2025-07-23-writing-for-myself/</id>
+    <content type="html">&lt;p&gt;Sometimes I get the urge to write about what I&#39;m doing or what I&#39;ve discovered.
+But since I stay away from social media, it usually ends up going nowhere, the urge gets ignored until it builds up again.&lt;/p&gt;
+&lt;p&gt;Right now, that urge is boiling over again, and I remembered: I have a website.
+&lt;em&gt;This&lt;/em&gt; website. And even if no one reads it, I can still write on it, and &lt;strong&gt;that&#39;s enough&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;So, I’m reclaiming a bit of control over this dusty corner of the interconnected world to dump my words, rants, and thoughts into this little space of mine.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;A while back (&lt;em&gt;maybe years ago, actually&lt;/em&gt;), I read about a concept called a &lt;em&gt;Digital Garden&lt;/em&gt;.
+It&#39;s something in between a blog, a notebook, and what some might call a &amp;quot;Second Brain&amp;quot; but with fewer notes, and more curated, crafted ones.
+I&#39;m going by memory here, so the definition might be off, but that&#39;s the version that stuck with me.
+And that&#39;s the idea I want to cultivate (pun intended?).&lt;/p&gt;
+&lt;p&gt;Even though a proper Digital Garden seems like too big of a commitment right now, nothing&#39;s stopping me from trying and maybe, this time, sticking with it.
+The other times I tried to restart/recreate/revamp my personal website, I always said:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;This time I’ll write one post a week.
+It’ll be wonderful.
+Everyone will read it and I’ll be rich.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;I grew up when blogs were the backbone of the internet’s learning infrastructure.
+YouTube didn&#39;t existed yet.
+Videos were self-hosted and played in custom Flash players but no one made educational videos.
+There were DVDs, though. The cool technologies were shared in written form on the blog of the author, or on blogs that curated content from multiple writers.&lt;/p&gt;
+&lt;p&gt;So, back then, having a schedule and writing good content about what I learned (&lt;em&gt;and what others could learn from me&lt;/em&gt;) felt like a necessary part of the process.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Now?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Now I don&#39;t fucking care if anyone reads this blog.&lt;/strong&gt;&lt;br&gt;
+I don&#39;t care if it&#39;s useful to anyone else.&lt;br&gt;
+What matters is that it&#39;s useful to &lt;strong&gt;me&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;If I want - or &lt;em&gt;need&lt;/em&gt; - to write something, I&#39;ll do it here, get it out of me, &lt;strong&gt;and that&#39;ll be enough&lt;/strong&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;If this Digital Garden takes shape, maybe it&#39;ll be weird.
+Maybe it&#39;ll be cool. Maybe it&#39;ll rot. Or maybe it&#39;ll thrive. It might smell or a gentle breeze might pass through.
+However it turns out, one thing is certain: it will be mine. And it will be made for me.&lt;/p&gt;
+&lt;p&gt;I don&#39;t need to end with a sign-off for the reasons above but I want to.
+Maybe it&#39;s for my future self. Who cares.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bye. See you next time.&lt;/strong&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Note-taking is simple, right?!</title>
+    <link href="https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/" />
+    <updated>2021-05-21T19:01:56Z</updated>
+    <id>https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/</id>
+    <content type="html">&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;: Try &lt;a href=&quot;https://obsidian.md/&quot;&gt;Obsidian.md&lt;/a&gt; — it&#39;s great!&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Over the past few years, I’ve found myself in need of a tool to help me take notes — just to remember things, or to quickly store thoughts in the moment.&lt;/p&gt;
+&lt;p&gt;When I was younger, I never cared much about where I wrote those notes. I thought just writing them down was enough to remember them.&lt;br&gt;
+&lt;em&gt;Silly me...&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Eventually, I realized I couldn’t keep everything in my head, so I started searching for a better system.&lt;br&gt;
+And so, the journey began.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Like many others, I started with &lt;strong&gt;Evernote&lt;/strong&gt;.&lt;br&gt;
+For 3–4 years, it was my go-to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A new idea? Write it in Evernote.&lt;/li&gt;
+&lt;li&gt;A line of code I wanted to remember forever? Evernote.&lt;/li&gt;
+&lt;li&gt;A quote that resonated with me? Evernote.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I was writing every day without caring much about organization.&lt;br&gt;
+I added tags when they felt relevant or dropped notes into a notebook if they were part of a project — but nothing fancy.&lt;/p&gt;
+&lt;p&gt;Over time, though, I started to feel like I was losing control.&lt;br&gt;
+Search helped, sure, but it masked a bigger problem:&lt;br&gt;
+&lt;strong&gt;I always had to search for something.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I wanted something more &lt;em&gt;proactive&lt;/em&gt;, more &lt;em&gt;intelligent&lt;/em&gt;.&lt;br&gt;
+Yeah, I know — those words are a bit overused, but they really do apply here.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;So I switched.&lt;br&gt;
+And like many others, I moved to &lt;strong&gt;Notion&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;At first, I thought I’d arrived. I could finally &lt;em&gt;connect everything&lt;/em&gt;!&lt;br&gt;
+Each note had a place, they could be linked, visualized as a table, list, board...&lt;br&gt;
+And then — I got completely lost.&lt;/p&gt;
+&lt;p&gt;Still, I kept going. I cared for each note, gave them proper tags and metadata.&lt;br&gt;
+Everything had a home. Everything was structured.&lt;br&gt;
+And yet… something was still missing. I didn’t know what.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Fast forward a couple more years, and we’re nearly in the present.&lt;/p&gt;
+&lt;p&gt;Recently, I started reading more “useful” books instead of just fantasy and sci-fi.&lt;br&gt;
+One book in particular changed everything:&lt;br&gt;
+&lt;a href=&quot;https://amzn.to/3hLKwz9&quot;&gt;&lt;strong&gt;How to Take Smart Notes&lt;/strong&gt; by Sönke Ahrens&lt;/a&gt;.&lt;br&gt;
+Through it, I discovered the &lt;a href=&quot;https://en.wikipedia.org/wiki/Zettelkasten&quot;&gt;Zettelkasten&lt;/a&gt; method.&lt;/p&gt;
+&lt;p&gt;That was the missing piece!&lt;br&gt;
+What I’d needed all along was a way to link my notes and build structure through connections.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;So... a new journey began.&lt;/p&gt;
+&lt;p&gt;Now I needed a tool that supported the &lt;strong&gt;Zettelkasten&lt;/strong&gt; approach.&lt;br&gt;
+To be fair, Notion could do the job — but not in the way &lt;em&gt;I&lt;/em&gt; needed.&lt;br&gt;
+I wanted something more minimal. I didn’t want to get buried in features.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Then I came across &lt;a href=&quot;https://roamresearch.com/&quot;&gt;&lt;strong&gt;Roam Research&lt;/strong&gt;&lt;/a&gt;.&lt;br&gt;
+But $15/month for a note-taking app (without a yearly commitment)? Not happening.&lt;/p&gt;
+&lt;p&gt;So I kept looking — and found &lt;a href=&quot;https://foambubble.github.io/foam/&quot;&gt;&lt;strong&gt;Foam&lt;/strong&gt;&lt;/a&gt;.&lt;br&gt;
+A note-taking toolkit built on &lt;strong&gt;Visual Studio Code&lt;/strong&gt;, with GitHub support, my extensions, and a graph view.&lt;br&gt;
+What more could I ask for?&lt;/p&gt;
+&lt;p&gt;At first, Foam was amazing.&lt;br&gt;
+The graph view was invaluable, and I spent a lot of time linking my notes.&lt;br&gt;
+You never know when a connection could spark a new idea.&lt;/p&gt;
+&lt;p&gt;But then... I made a mistake: &lt;strong&gt;I organized my notes into folders.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Foam doesn’t &lt;em&gt;need&lt;/em&gt; folders — links are enough.&lt;br&gt;
+But I wanted folders anyway.&lt;br&gt;
+That decision led to broken links, duplicated notes, and a small filesystem mess.&lt;br&gt;
+It’s mostly fixed now, but something broke for me.&lt;br&gt;
+Foam tries to do something VSCode wasn’t really built for — and it shows.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Aaand I was lost again.&lt;/p&gt;
+&lt;p&gt;So I had a little talk with my future self:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“You&#39;re not going to buy new games every month and let them rot in your Steam library.&lt;br&gt;
+You&#39;re going to spend $15/month on &lt;strong&gt;Roam&lt;/strong&gt;!”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So I jumped in.&lt;/p&gt;
+&lt;p&gt;This time, I had a clear goal:&lt;br&gt;
+This would be my &lt;em&gt;Second Brain&lt;/em&gt;.&lt;br&gt;
+I’d feed it so well it would spit out ideas faster than I could handle.&lt;br&gt;
+Note, link, note, link, link everything! &lt;em&gt;Muahahah!&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;But wait... bullet points only?&lt;br&gt;
+How do I write a proper article here?&lt;br&gt;
+Where&#39;s the formatting for long-form notes?&lt;/p&gt;
+&lt;p&gt;Nope. Just bullet points.&lt;/p&gt;
+&lt;p&gt;I get the appeal — atomic notes, infinite linkability, etc.&lt;br&gt;
+But it’s not what &lt;strong&gt;I’m looking for&lt;/strong&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“Yes! I have my $15/month back — more games for my &lt;em&gt;‘I’ll play you soon’&lt;/em&gt; collection!”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;Finally&lt;/strong&gt;, we reach the end of this journey.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://obsidian.md/&quot;&gt;&lt;strong&gt;Obsidian.md&lt;/strong&gt;&lt;/a&gt; genuinely feels like my &lt;em&gt;endgame&lt;/em&gt; note-taking system.&lt;/p&gt;
+&lt;p&gt;It has everything Foam offers — but purpose-built.&lt;br&gt;
+It does what Roam does — but with proper formatting.&lt;br&gt;
+It lacks the clutter of Notion — and that helps me &lt;em&gt;just write&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/aumPc02glZ-660.avif 660w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/aumPc02glZ-660.webp 660w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/eleventy-base-blog/posts/note-takin-is-simple-right/aumPc02glZ-660.png&quot; alt=&quot;Obsidian Graph&quot; width=&quot;660&quot; height=&quot;626&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;p&gt;My graph is still small — I haven’t imported everything yet.&lt;br&gt;
+But this is just the beginning. I’ll gradually migrate my notes here and grow my new &lt;strong&gt;Second Brain&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Oh, and I even started building a plugin for Obsidian:&lt;br&gt;
+&lt;a href=&quot;https://github.com/oeN/liquid-template&quot;&gt;&lt;strong&gt;liquid-templates&lt;/strong&gt;&lt;/a&gt; — it adds support for LiquidJS-style tags in your templates.&lt;br&gt;
+If you&#39;re curious, stick around.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;...You read it all?? 😳&lt;br&gt;
+I’m sorry — I’m all out of potatoes. So instead...&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;YOU’RE BREATHTAKING.&lt;/strong&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Forecastle: my services Dashboard of choice</title>
+    <link href="https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/" />
+    <updated>2021-05-12T19:59:20Z</updated>
+    <id>https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/</id>
+    <content type="html">&lt;p&gt;Some weeks ago, I started the migration of my homelab from many docker-compose files to a more organized and reliable Kubernetes cluster.&lt;/p&gt;
+&lt;p&gt;In both these scenarios, I needed a way to collect all the links to the various services I have in one place. In the docker-compose implementation, I&#39;ve used &lt;a href=&quot;https://github.com/linuxserver/Heimdall&quot;&gt;Heimdall&lt;/a&gt;, a great tool that gets the job done, but it requires some manual work. With the Kubernetes version of my homelab, I&#39;m trying to automate as many tasks as possible.&lt;/p&gt;
+&lt;p&gt;I don&#39;t remember what the search phrase used to find this was (I couldn&#39;t replicate the results), but I come across &lt;a href=&quot;https://github.com/stakater/Forecastle&quot;&gt;Forecastle&lt;/a&gt; and decide to give it a try.&lt;/p&gt;
+&lt;p&gt;The installation is pretty simple, follow the steps described on the repository, and you&#39;re good to go. I went for the &amp;quot;Vanilla Manifests&amp;quot; path and ended copy the manifest in my homelab repo to inspect it better.&lt;/p&gt;
+&lt;p&gt;Looking into the manifest, I see that it will create the classic resources, Deployment, Service, ConfigMap, etc. And also a CRD called &lt;strong&gt;ForecastleApp&lt;/strong&gt; and later on, we&#39;ll see how it can be used.&lt;/p&gt;
+&lt;p&gt;As mentioned in my previous post, where I described &lt;a href=&quot;https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/kubernetes-external-dns-pihole-and-a-custom-domain.md&quot;&gt;my journey with &lt;strong&gt;external-dns&lt;/strong&gt; and &lt;strong&gt;Pi-hole&lt;/strong&gt;&lt;/a&gt;, I use &lt;a href=&quot;https://kustomize.io/&quot;&gt;Kustomize&lt;/a&gt; to manage all my manifest. After downloading the &lt;strong&gt;Forecastle&lt;/strong&gt; manifest, I&#39;ve added it to a &lt;code&gt;kustomization.yml&lt;/code&gt; file:&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Kustomization
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; kustomize.config.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Forecastle
+&lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; forecastle.yaml
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; ingress.yml
+&lt;span class=&quot;token key atrule&quot;&gt;patchesStrategicMerge&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; configmap&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;patch.yml&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Other than the &lt;code&gt;forecastle.yaml&lt;/code&gt; file (this is the one copied from the repo), you can notice the &lt;code&gt;ingress.yml&lt;/code&gt; and the &lt;code&gt;configmap-patch.yml&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The ingress is nothing special, just an internal domain that points to the &lt;code&gt;forecastle&lt;/code&gt; service, created with the base manifest:&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Ingress
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;kubernetes.io/ingress.class&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; forecastle
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; hub.diomedet.internal
+    &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;serviceName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; forecastle
+          &lt;span class=&quot;token key atrule&quot;&gt;servicePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http
+        &lt;span class=&quot;token key atrule&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: if you want to know how to create an internal domain, check the post I&#39;ve linked above ;)&lt;/p&gt;
+&lt;p&gt;And then, we have the &lt;code&gt;configmap-patch.yml&lt;/code&gt; containing a patch applied to the ** Forecastle** config map. Using this patch method allows me not to worry about the base file, which I can re-download every time I want. Kustomize will apply the patch until the config map name does not change.&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ConfigMap
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; forecastle
+&lt;span class=&quot;token key atrule&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;config.yaml&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;crdEnabled&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean important&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;namespaceSelector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;any&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean important&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This patch is essential. It tells &lt;strong&gt;Forecastle&lt;/strong&gt; to watch all the namespaces and to enable the CRDs.&lt;/p&gt;
+&lt;p&gt;For me, the &lt;code&gt;crdEnable: true&lt;/code&gt; option is essential because I have some services outside the cluster that I want to have in my dashboard; this allows me to create a &lt;strong&gt;ForecastleApp&lt;/strong&gt; like this one:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;unraind.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; forecastle.stakater.com/v1alpha1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ForecastleApp
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; unraid
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Unraid
+  &lt;span class=&quot;token key atrule&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Infrastructure
+  &lt;span class=&quot;token key atrule&quot;&gt;icon&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &amp;lt;icon_url&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//&amp;lt;unraid_url&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3080&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;networkRestricted&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean important&quot;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For all the services inside the cluster that needs to be in the main dashboard, I use the annotations on the Ingress, like:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;home-assistant/ingress.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Ingress
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;kubernetes.io/ingress.class&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+    &lt;span class=&quot;token key atrule&quot;&gt;cert-manager.io/cluster-issuer&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;letsencrypt-prod&quot;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;forecastle.stakater.com/expose&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean important&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;forecastle.stakater.com/appName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Home Assistant
+    &lt;span class=&quot;token key atrule&quot;&gt;forecastle.stakater.com/group&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Home Automation
+    &lt;span class=&quot;token key atrule&quot;&gt;forecastle.stakater.com/icon&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; https&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//&amp;lt;ha_url&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;/static/icons/favicon&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;apple&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;180x180.png
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &amp;lt;ha_url&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;serviceName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant
+          &lt;span class=&quot;token key atrule&quot;&gt;servicePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ha
+        &lt;span class=&quot;token key atrule&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /
+  &lt;span class=&quot;token key atrule&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &amp;lt;ha_url&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;secretName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;tls&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Technically, Home Assistant is not inside the cluster yet, but this Ingress fits the example I need. If you want to know how I&#39;ve exposed Home Assistant through the cluster, check my other post on &lt;a href=&quot;https://diomedet.com/eleventy-base-blog/posts/forecastle-my-services-dashboard-of-choice/expose-an-external-resource-with-a-kubernetes-ingress.md&quot;&gt;how to expose an external resource with Kubernetes&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In conclusion, now I have two ways of automatically create a new entry in my service dashboard, no more manual insert!&lt;/p&gt;
+&lt;p&gt;Heimdall does something more than collects links; for some apps, likes Pi-hole, it can show you some stats (like the number of queries blocked) right in the dashboard without even open the link. Even if I had many apps supported by Heimdall, I never used that feature so much, so I&#39;m not going to miss it.&lt;/p&gt;
+&lt;p&gt;There is one thing I&#39;m going to miss about Heimdall; it comes with many icons you only have to pick.&lt;/p&gt;
+&lt;p&gt;Anyway, I&#39;m not saying that &lt;strong&gt;Forecastle&lt;/strong&gt; is better than &lt;strong&gt;Heimdall&lt;/strong&gt; it only suits my use case better.&lt;/p&gt;
+&lt;p&gt;See you the next time, bye!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Kubernetes, external-dns, Pi-hole and a custom domain</title>
+    <link href="https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/" />
+    <updated>2021-05-06T19:17:56Z</updated>
+    <id>https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/</id>
+    <content type="html">&lt;p&gt;During these days, I&#39;m tidying up my homelab and found the necessity of having an internal domain to expose some apps inside my local network but not to the internet.&lt;/p&gt;
+&lt;p&gt;For example, I use &lt;a href=&quot;https://www.vaultproject.io/&quot;&gt;Vault&lt;/a&gt; to store secrets, and I want an easy way to access the web-ui rather than using the IP address. The solution in Kubernetes is to create an &lt;a href=&quot;https://kubernetes.io/docs/concepts/services-networking/ingress/&quot;&gt;Ingress&lt;/a&gt;; right now, I only have Ingresses with my main domain &lt;code&gt;diomedet.com&lt;/code&gt; but if I use it will be exposed to the whole internet, and I don&#39;t want that.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/kubernetes-sigs/external-dns&quot;&gt;external-dns&lt;/a&gt; is my tool of choice to handle the synchronization between my Ingresses and the DNS provider; on my local network, I use &lt;a href=&quot;https://pi-hole.net/&quot;&gt;Pi-hole&lt;/a&gt; to filter all my DNS request and to block some of them.&lt;/p&gt;
+&lt;p&gt;Pi-hole already has a &amp;quot;Local DNS Records&amp;quot; section where you could list an arbitrary domain and point it to a specific IP inside or outside your network.
+So, if there is a way to make &lt;strong&gt;external-dns&lt;/strong&gt; updates that list, what I&#39;m trying to achieve would be possible with a bit of effort. Unfortunately, there is no way to update the list of local DNS records on Pi-hole programmatically at the moment of writing, so we&#39;ve to find another way to do that.&lt;/p&gt;
+&lt;p&gt;Messing around with the interface of Pi-hole, I&#39;ve noticed that under &amp;quot;Settings -&amp;gt; DNS&amp;quot; you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of &amp;quot;Upstream DNS Servers&amp;quot; there is also a list of custom upstream DNS servers:&lt;/p&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.avif 1266w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.webp 1266w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/ImGZCRJJKC-1266.png&quot; alt=&quot;Pi-hole DNS Settings&quot; width=&quot;1266&quot; height=&quot;777&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;p&gt;So, the idea is to create a custom DNS server that can be updated by &lt;strong&gt;external-dns&lt;/strong&gt; and used by Pi-hole as an &lt;strong&gt;upstream DNS server&lt;/strong&gt;. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.&lt;/p&gt;
+&lt;p&gt;Great, we&#39;ve got a plan. Now it&#39;s time to make it real!&lt;/p&gt;
+&lt;h2 id=&quot;first-things-first-we-need-a-dns-server&quot;&gt;First things first, we need a DNS server&lt;/h2&gt;
+&lt;p&gt;Scouting between the providers supported by &lt;strong&gt;external-dns&lt;/strong&gt; there a bunch of choices that can be self-hosted, something like &lt;a href=&quot;https://www.powerdns.com/&quot;&gt;PowerDNS&lt;/a&gt; or &lt;a href=&quot;https://coredns.io/&quot;&gt;CoreDNS&lt;/a&gt;, at this point I was like:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;quot;mmh interesting, CoreDNS is the one used by Kubernetes internally must be a good choice, let&#39;s go with it.&amp;quot;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;A colleague suggested using PowerDNS**, but I was already set on my path, so I stuck with &lt;strong&gt;CoreDNS&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;To be clear, it&#39;s not a wrong choice, but it might be a little overkill for this specific purpose but let&#39;s see what difficulties this path reserved for us.&lt;/p&gt;
+&lt;p&gt;In the &lt;strong&gt;external-dns&lt;/strong&gt; repo, there is a folder &lt;code&gt;docs/tutorial&lt;/code&gt; with a markdown file for each supported provider (I think each didn&#39;t count), we&#39;re looking for the CoreDNS one: &lt;a href=&quot;https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md&quot;&gt;https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;It is a tutorial for minikube, but ignoring that part, we can use it for every Kubernetes cluster and bonus point, show us even how to install &lt;strong&gt;CoreDNS&lt;/strong&gt;, great two birds with one stone.&lt;/p&gt;
+&lt;p&gt;If you&#39;ve opened the file, you can see from the very beginning that the birds are not two anymore but three. The more, the merrier, right, right?!&lt;/p&gt;
+&lt;p&gt;If you haven&#39;t opened the link, let me recap that for you what we need to install:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CoreDNS (obviously)&lt;/li&gt;
+&lt;li&gt;etcd&lt;/li&gt;
+&lt;li&gt;another instance of external-dns (you need an instance of external-dns for each dns provider you&#39;re going to support)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;wait-why-we-need-etcd&quot;&gt;Wait, why we need etcd?&lt;/h2&gt;
+&lt;p&gt;We need etcd because this is the way how &lt;strong&gt;external-dns&lt;/strong&gt; talks to &lt;strong&gt;CoreDNS&lt;/strong&gt;, we have to create a section in the configuration of CoreDNS that tells him to read the value from a specific path on the &lt;strong&gt;etcd&lt;/strong&gt; instance we&#39;re going to configure and external-dns will update the same path with the information about the Ingresses we&#39;re going to create with our internal domain.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Before switching to &lt;strong&gt;etcd&lt;/strong&gt; directly, &lt;strong&gt;CoreDNS&lt;/strong&gt; was using &lt;a href=&quot;https://github.com/skynetservices/skydns&quot;&gt;SkyDNS&lt;/a&gt; (a service built on top of etcd) to serve these kinds of request, so, in the manifest files, we&#39;re going to see you&#39;ll find some refuse of that implementation.&lt;/p&gt;
+&lt;h2 id=&quot;install-etcd&quot;&gt;Install etcd&lt;/h2&gt;
+&lt;p&gt;Let&#39;s get down to business and install &lt;strong&gt;etcd&lt;/strong&gt;. In the end, it is a core component of Kubernetes; there nothing wrong with learning more about it.
+Just to let you know, don&#39;t use the internal &lt;strong&gt;etcd&lt;/strong&gt; for a user application (like the one we want to install here); it is not meant for that.&lt;/p&gt;
+&lt;p&gt;The tutorial linked above suggests we use the &lt;a href=&quot;https://github.com/coreos/etcd-operator&quot;&gt;etcd-operator&lt;/a&gt; and use &lt;a href=&quot;https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml&quot;&gt;https://raw.githubusercontent.com/coreos/etcd-operator/HEAD/example/example-etcd-cluster.yaml&lt;/a&gt; to create our etcd cluster.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Great, an operator nothing more simple than that...&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Slow down; the &lt;code&gt;etcd-operator&lt;/code&gt; repo was archived more than a year ago; even if it could work for a case like this, we don&#39;t want to install an operator that is not maintained anymore, so let&#39;s see how to deploy it manually.&lt;/p&gt;
+&lt;p&gt;After searching around, I ended up on this documentation page &lt;a href=&quot;https://etcd.io/docs/v3.4/op-guide/container/#docker&quot;&gt;https://etcd.io/docs/v3.4/op-guide/container/#docker&lt;/a&gt; that shows how to deploy, etcd with a single node configuration; prefect is what we need here.&lt;/p&gt;
+&lt;p&gt;Basically we need to port the command showed in the link in a manifest for kubernetes:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;docker run from etcd documentation&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;docker&lt;/span&gt; run &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;:2379 &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2380&lt;/span&gt;:2380 &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;--volume&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;${DATA_DIR}&lt;/span&gt;:/etcd-data &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;--name&lt;/span&gt; etcd &lt;span class=&quot;token variable&quot;&gt;${REGISTRY}&lt;/span&gt;:latest &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  /usr/local/bin/etcd &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  --data-dir&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;/etcd-data &lt;span class=&quot;token parameter variable&quot;&gt;--name&lt;/span&gt; node1 &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  --initial-advertise-peer-urls http://&lt;span class=&quot;token variable&quot;&gt;${NODE1}&lt;/span&gt;:2380 --listen-peer-urls http://0.0.0.0:2380 &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  --advertise-client-urls http://&lt;span class=&quot;token variable&quot;&gt;${NODE1}&lt;/span&gt;:2379 --listen-client-urls http://0.0.0.0:2379 &lt;span class=&quot;token punctuation&quot;&gt;&#92;&lt;/span&gt;
+  --initial-cluster &lt;span class=&quot;token assign-left variable&quot;&gt;node1&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;http://&lt;span class=&quot;token variable&quot;&gt;${NODE1}&lt;/span&gt;:2380&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Manifest file &lt;em&gt;etc-sts.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; apps/v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; StatefulSet
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+  &lt;span class=&quot;token key atrule&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;app.kubernetes.io/name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;serviceName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+  &lt;span class=&quot;token key atrule&quot;&gt;replicas&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;updateStrategy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; OnDelete
+  &lt;span class=&quot;token key atrule&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;app.kubernetes.io/name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+  &lt;span class=&quot;token key atrule&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;app.kubernetes.io/name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+    &lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+          &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; gcr.io/etcd&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;development/etcd&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;latest
+          &lt;span class=&quot;token key atrule&quot;&gt;imagePullPolicy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; IfNotPresent
+          &lt;span class=&quot;token key atrule&quot;&gt;command&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; /usr/local/bin/etcd
+          &lt;span class=&quot;token key atrule&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_NAME
+              &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; node1
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_DATA_DIR
+              &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /etcd&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;data
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_LISTEN_PEER_URLS
+              &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//0.0.0.0&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2380&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_LISTEN_CLIENT_URLS
+              &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//0.0.0.0&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_INITIAL_ADVERTISE_PEER_URLS
+              &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//0.0.0.0&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2380&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_ADVERTISE_CLIENT_URLS
+              &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//0.0.0.0&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_INITIAL_CLUSTER
+              &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;node1=http://0.0.0.0:2380&quot;&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;volumeMounts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; data
+              &lt;span class=&quot;token key atrule&quot;&gt;mountPath&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /etcd&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;data
+          &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;
+              &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; client
+            &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;containerPort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2380&lt;/span&gt;
+              &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; peer
+  &lt;span class=&quot;token key atrule&quot;&gt;volumeClaimTemplates&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; data
+      &lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;accessModes&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; ReadWriteOnce
+        &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;token key atrule&quot;&gt;storage&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1Gi &lt;span class=&quot;token comment&quot;&gt;# we don&#39;t need much space to store DNS information&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We&#39;re going to use a &lt;code&gt;StatefulSet&lt;/code&gt; because &lt;code&gt;etcd&lt;/code&gt; is a stateful app and needs a volume to persist its data. Rather than the classic &lt;code&gt;Deploy&lt;/code&gt; with a &lt;code&gt;StatefulSet&lt;/code&gt; we&#39;re certain that the generated pod will always receive the same name, and the volume attached to it will always be the same. &lt;a href=&quot;https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/&quot;&gt;More on the StatefulSet&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The only noticeable difference between the &lt;code&gt;docker run ...&lt;/code&gt; command and this manifest file is that we&#39;re using environment variables instead of configuration flags. I had some trouble getting the flags working, and I like more the environment variables, anyway; here a list of &lt;a href=&quot;https://etcd.io/docs/v3.4/op-guide/configuration/&quot;&gt;etcd configuration flags&lt;/a&gt; with the matching variable.&lt;/p&gt;
+&lt;p&gt;Now, in order to expose &lt;code&gt;etcd&lt;/code&gt; to the other applications in the cluster we need to create a &lt;code&gt;Service&lt;/code&gt; too:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;etc-service.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Service
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+  &lt;span class=&quot;token key atrule&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;app.kubernetes.io/name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; client
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2380&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;2380&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; peer
+  &lt;span class=&quot;token key atrule&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;app.kubernetes.io/name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Nothing special here, but this completes the manifest needed for our etcd instance.&lt;/p&gt;
+&lt;h2 id=&quot;install-coredns&quot;&gt;Install CoreDNS&lt;/h2&gt;
+&lt;p&gt;Now that we have our &lt;strong&gt;etcd&lt;/strong&gt;, we can continue with the tutorial and install our custom version of CoreDSN. You can use &lt;code&gt;helm&lt;/code&gt; to install it, or if you want a more instructive approach, you can use &lt;code&gt;helm template&lt;/code&gt; to render the file and applying them manually or with kustomize. In this way, you can check them individually to see what the chart will create in your cluster.&lt;/p&gt;
+&lt;p&gt;Since my homelab is a way to learn more about Kubernetes, I choose to render the file with &lt;code&gt;helm template&lt;/code&gt; and use &lt;a href=&quot;https://kustomize.io/&quot;&gt;kustomize&lt;/a&gt; to apply them later.&lt;/p&gt;
+&lt;p&gt;Whichever way you choose, the important part is to set a couple of options inside the &lt;code&gt;values.yml&lt;/code&gt; file correctly.&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;# if you don&#39;t have RBAC enabled on your cluster, I think you can set this to false&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;rbac&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean important&quot;&gt;true&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;# isClusterService specifies whether the chart should be deployed as cluster-service or regular k8s app.&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;isClusterService&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean important&quot;&gt;true&lt;/span&gt;
+
+&lt;span class=&quot;token key atrule&quot;&gt;servers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;zones&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;zone&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; .
+  &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;53&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;plugins&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;...&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;# all other plugins&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; forward
+    &lt;span class=&quot;token key atrule&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; . 8.8.8.8&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;53&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;# tells where to forward all the DNS requests that CoreDNS can&#39;t solve&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; etcd
+    &lt;span class=&quot;token key atrule&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; diomedet.internal &lt;span class=&quot;token comment&quot;&gt;# insert your domain here&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;configBlock&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;
+      stubzones
+      path /skydns
+      endpoint http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//etcd&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The most important part is the last one, we&#39;re going to configure the &lt;code&gt;etcd&lt;/code&gt; plugin and tell &lt;strong&gt;CoreDNS&lt;/strong&gt; to look inside the &lt;code&gt;http://etcd:2379&lt;/code&gt; to find the information about the domain &lt;code&gt;diomedet.internal&lt;/code&gt; (this is my internal domain)&lt;/p&gt;
+&lt;p&gt;Also, the &lt;code&gt;forward&lt;/code&gt; part is important; it tells CoreDNS where to redirect all the DNS that it can&#39;t solve. Later on, I&#39;ll explain why it is crucial.&lt;/p&gt;
+&lt;p&gt;With these values, we can run the command.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;helm template custom coredns/coredns --output-dir . --values values.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;(custom is the name of my release, then it&#39;ll turn out in &lt;code&gt;custom-coredns&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;Helm will create a folder &lt;code&gt;coredns/template&lt;/code&gt; with five files in it:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;coredns/templates
+├── clusterrole.yaml
+├── clusterrolebinding.yaml
+├── configmap.yaml
+├── deployment.yaml
+└── service.yaml&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now the only thing we&#39;ve to do is to &lt;code&gt;kubectl apply&lt;/code&gt; these files, and we&#39;ll end up with a working CoreDNS instance. Working but still not reachable outside the cluster, if you have &lt;a href=&quot;https://metallb.universe.tf/&quot;&gt;MetalLB&lt;/a&gt; configured, you can change the &lt;code&gt;ServiceType&lt;/code&gt; from &lt;code&gt;ClusterIP&lt;/code&gt; to &lt;code&gt;LoadBalancer&lt;/code&gt; to get an IP.
+I haven&#39;t this feature in my cluster yet, so for now, I&#39;m going to use the &lt;code&gt;NodePort&lt;/code&gt; type; this allows me to use a port of my node and point it to the service.&lt;/p&gt;
+&lt;p&gt;With &lt;code&gt;kustomize&lt;/code&gt;, there is the concept of patches, so I can create a patch that will modify the &lt;code&gt;service.yaml&lt;/code&gt; file without directly touching it. I prefer this way, so if I have to re-run &lt;code&gt;helm template ...&lt;/code&gt; I don&#39;t have to mind any modification I could have made because kustomize will patch everything.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;patches/service.yaml&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Service
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; custom&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;coredns
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; NodePort
+  &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;53&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; UDP&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; udp&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;53&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;nodePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30053&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;53&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; TCP&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; tcp&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;53&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;nodePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30053&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here I tell Kubernetes to use the port &lt;code&gt;30053&lt;/code&gt; for both &lt;code&gt;UDP&lt;/code&gt; and &lt;code&gt;TCP&lt;/code&gt;. With the &lt;code&gt;NodePort&lt;/code&gt;, you can use ports from 30000 to 32767 if you do not modify it.&lt;/p&gt;
+&lt;p&gt;To wrap it up, here my &lt;code&gt;kustomization.yml&lt;/code&gt; file:&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Kustomization
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; kustomize.config.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; custom&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;coredns
+&lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; templates/clusterrole.yaml
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; templates/clusterrolebinding.yaml
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; templates/configmap.yaml
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; templates/deployment.yaml
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; templates/service.yaml
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; etcd&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;sts.yml
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; etcd&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;service.yml
+&lt;span class=&quot;token key atrule&quot;&gt;patchesStrategicMerge&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; patches/service.yaml&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you followed my path, you should have all the files to make it work, anyway. If you&#39;ve installed the helm chart directly, you can always change the service manifest directly on Kubernetes. You can even set the &lt;code&gt;serviceType&lt;/code&gt; in the &lt;code&gt;values.yaml&lt;/code&gt; file, but I didn&#39;t find a way to specify the &lt;code&gt;nodePort&lt;/code&gt; to use, so I decided to go with the patch.&lt;/p&gt;
+&lt;h2 id=&quot;finally-install-external-dns&quot;&gt;Finally, install external-dns&lt;/h2&gt;
+&lt;p&gt;Now we can finally install the instance of &lt;strong&gt;external-dns&lt;/strong&gt; that will monitor the &lt;code&gt;Ingress&lt;/code&gt; created with our internal domain.&lt;/p&gt;
+&lt;p&gt;I have RBAC enabled on my cluster, so my manifest look like this:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;external-dns.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; rbac.authorization.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ClusterRole
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+&lt;span class=&quot;token key atrule&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;services&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;endpoints&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;pods&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;get&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;watch&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;list&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;extensions&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;networking.k8s.io&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;ingresses&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;get&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;watch&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;list&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;apiGroups&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;resources&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;nodes&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;verbs&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;list&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; rbac.authorization.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ClusterRoleBinding
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;viewer
+&lt;span class=&quot;token key atrule&quot;&gt;roleRef&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;apiGroup&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; rbac.authorization.k8s.io
+  &lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ClusterRole
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+&lt;span class=&quot;token key atrule&quot;&gt;subjects&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ServiceAccount
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+&lt;span class=&quot;token punctuation&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ServiceAccount
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+&lt;span class=&quot;token punctuation&quot;&gt;---&lt;/span&gt;
+&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; apps/v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Deployment
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;strategy&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Recreate
+  &lt;span class=&quot;token key atrule&quot;&gt;selector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;matchLabels&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+  &lt;span class=&quot;token key atrule&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token key atrule&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+    &lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;serviceAccountName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+      &lt;span class=&quot;token key atrule&quot;&gt;containers&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns
+        &lt;span class=&quot;token key atrule&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; k8s.gcr.io/external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns/external&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;dns&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;v0.7.6
+        &lt;span class=&quot;token key atrule&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;source=ingress
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;provider=coredns
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;log&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;level=debug &lt;span class=&quot;token comment&quot;&gt;# debug only&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;domain&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;filter=diomedet.internal
+        &lt;span class=&quot;token key atrule&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ETCD_URLS
+          &lt;span class=&quot;token key atrule&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;//etcd.custom&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;coredns&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2379&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you don&#39;t have RBAC enable, you can use only the &lt;code&gt;Deployment&lt;/code&gt; manifest.&lt;/p&gt;
+&lt;p&gt;This is the most straightforward part, just set the correct &lt;code&gt;ETCD_URLS&lt;/code&gt; with the correct value, and you&#39;re good to go. I have deployed my &lt;strong&gt;external-dns&lt;/strong&gt; in a namespace different than the &lt;strong&gt;etcd&lt;/strong&gt; one, so in the &lt;code&gt;ETCD_URLS&lt;/code&gt; variable, I have to specify the service with the namespace too &lt;code&gt;http://etcd.custom-coredns:2379&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Once you applied your manifest you can create an ingress with the internal domain you chose, in my case is something like:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;vault/ingress.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Ingress
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;kubernetes.io/ingress.class&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; vault&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;ui&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;internal
+  &lt;span class=&quot;token key atrule&quot;&gt;namespace&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; vault
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; vault.diomedet.internal
+    &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;serviceName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; vault
+          &lt;span class=&quot;token key atrule&quot;&gt;servicePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; http
+        &lt;span class=&quot;token key atrule&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After you create an Ingress with your internal domain on the external-dns pod, you should see a log like the following one:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;level=debug msg=&amp;quot;Endpoints generated from ingress: vault/vault-ui-internal: [vault.diomedet.internal 0 IN A  10.10.5.123 []]&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;10.10.5.123&lt;/code&gt; is the IP address of my Kubernetes cluster, it&#39;s called &amp;quot;Scyther&amp;quot;, the Pokédex number of Scyther is #123, so here explained my IP, not that you asked, but here it is anyway :P&lt;/p&gt;
+&lt;p&gt;Now, if I use &lt;code&gt;dig&lt;/code&gt; to check the name resolution, it should work correctly:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;❯ &lt;span class=&quot;token function&quot;&gt;dig&lt;/span&gt; @10.10.5.123 &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30053&lt;/span&gt; vault.diomedet.internal
+
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&gt;&lt;/span&gt; DiG &lt;span class=&quot;token number&quot;&gt;9.11&lt;/span&gt;.3-1ubuntu1.13-Ubuntu &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&gt;&lt;/span&gt; @10.10.5.123 &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;30053&lt;/span&gt; vault.diomedet.internal
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt; server found&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; global options: +cmd
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; Got answer:
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; -&lt;span class=&quot;token operator&quot;&gt;&gt;&gt;&lt;/span&gt;HEADER&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&amp;lt;-&lt;/span&gt; opcode: QUERY, status: NOERROR, id: &lt;span class=&quot;token number&quot;&gt;5546&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; flags: qr aa rd&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; QUERY: &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;, ANSWER: &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;, AUTHORITY: &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;, ADDITIONAL: &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; WARNING: recursion requested but not available
+
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; OPT PSEUDOSECTION:
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; EDNS: version: &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;, flags:&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; udp: &lt;span class=&quot;token number&quot;&gt;4096&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; COOKIE: bc40278d825e2b16 &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;echoed&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; QUESTION SECTION:
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;vault.diomedet.internal.       IN      A
+
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; ANSWER SECTION:
+vault.diomedet.internal. &lt;span class=&quot;token number&quot;&gt;30&lt;/span&gt;     IN      A       &lt;span class=&quot;token number&quot;&gt;10.10&lt;/span&gt;.5.123
+
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; Query time: &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt; msec
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; SERVER: &lt;span class=&quot;token number&quot;&gt;10.10&lt;/span&gt;.5.123&lt;span class=&quot;token comment&quot;&gt;#30053(10.10.5.123)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; WHEN: Sat May 08 &lt;span class=&quot;token number&quot;&gt;16&lt;/span&gt;:11:48 CEST &lt;span class=&quot;token number&quot;&gt;2021&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; MSG SIZE  rcvd: &lt;span class=&quot;token number&quot;&gt;103&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But if I run the &lt;code&gt;nslookup&lt;/code&gt; command, I still get an error:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;❯ &lt;span class=&quot;token function&quot;&gt;nslookup&lt;/span&gt; vault.diomedet.internal
+Server:         &lt;span class=&quot;token number&quot;&gt;172.29&lt;/span&gt;.96.1
+Address:        &lt;span class=&quot;token number&quot;&gt;172.29&lt;/span&gt;.96.1&lt;span class=&quot;token comment&quot;&gt;#53&lt;/span&gt;
+
+** server can&#39;t &lt;span class=&quot;token function&quot;&gt;find&lt;/span&gt; vault.diomedet.internal: NXDOMAIN&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This error appears because we still have to change the Pi-hole configurations.&lt;/p&gt;
+&lt;h2 id=&quot;configure-pi-hole-to-use-our-new-dns-server&quot;&gt;Configure Pi-hole to use our new DNS Server&lt;/h2&gt;
+&lt;p&gt;To configure Pi-hole, you need to return to DNS Setting tab &lt;code&gt;http://pihole.local/admin/settings.php?tab=dns&lt;/code&gt;, uncheck all the &amp;quot;Upstream DNS Servers&amp;quot; and insert your custom one, in my case &lt;code&gt;10.10.5.123#300123&lt;/code&gt; (the # is used to specify the port).&lt;/p&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.avif 1268w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.webp 1268w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://diomedet.com/eleventy-base-blog/posts/kubernetes-external-dns-pihole-and-a-custom-domain/vPSnv2teN5-1268.png&quot; alt=&quot;Pi-hole DNS Settings Updated&quot; width=&quot;1268&quot; height=&quot;770&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;p&gt;Now, if you run the &lt;code&gt;nslookup&lt;/code&gt; command again, you should end with the correct result:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;❯ &lt;span class=&quot;token function&quot;&gt;nslookup&lt;/span&gt; vault.diomedet.internal
+Server:         &lt;span class=&quot;token number&quot;&gt;172.29&lt;/span&gt;.96.1
+Address:        &lt;span class=&quot;token number&quot;&gt;172.29&lt;/span&gt;.96.1&lt;span class=&quot;token comment&quot;&gt;#53&lt;/span&gt;
+
+Non-authoritative answer:
+Name:   vault.diomedet.internal
+Address: &lt;span class=&quot;token number&quot;&gt;10.10&lt;/span&gt;.5.123&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Great! We can create as many Ingress with our internal domain as we want, and they will always be resolved to our cluster IP.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Unfortunately, our instance of &lt;strong&gt;CoreDNS&lt;/strong&gt; will become a central point for our network in this scenario. If something happens to our cluster or the CoreDNS pod stops, we&#39;ll lose the ability to resolve domain names. I&#39;m still searching for a way to solve this problem and have a more reliable solution, but for now, I have to stick with this downside.&lt;/p&gt;
+&lt;p&gt;Do you remember the &lt;code&gt;forward&lt;/code&gt; value that we set on the &lt;code&gt;values.yaml&lt;/code&gt; for &lt;strong&gt;CoreDNS&lt;/strong&gt;?&lt;/p&gt;
+&lt;p&gt;That option has become the only way to choose which DNS server we want to use to solve all the DNS requests that can&#39;t be solved internally and aren&#39;t blocked by Pi-hole. This is because if we check some of the &amp;quot;Upstream DNS Server&amp;quot;, we&#39;ll lose the ability to resolve our internal domain.&lt;/p&gt;
+&lt;p&gt;I have some ideas on how to solve that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A second Pi-hole that is going to be my &amp;quot;Custom 2&amp;quot; upstream DNS Server&lt;/li&gt;
+&lt;li&gt;An ingress that masks the IP of the DNS server I want to use, something like I&#39;ve done in a previous post &lt;a href=&quot;https://www.diomedet.com/posts/expose-an-external-resource-with-a-kubernetes-ingress/&quot;&gt;Expose an external resource with a Kubernetes Ingress&lt;/a&gt;. A mask is needed because if you insert &lt;code&gt;8.8.8.8&lt;/code&gt; into the &amp;quot;Custom 2&amp;quot; field, Pi-hole will automatically check the Google server for you.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But I haven&#39;t tested any of that, so, for today, this is it.&lt;/p&gt;
+&lt;p&gt;I&#39;m also looking for a way to have a certificate on my internal domain, so I don&#39;t get those annoying alerts when I&#39;m trying to access my apps via &lt;code&gt;HTTPS&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I hope you&#39;ve found this article helpful. Stay tuned for future updates!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Expose an external resource with a Kubernetes Ingress</title>
+    <link href="https://diomedet.com/eleventy-base-blog/posts/expose-an-external-resource-with-a-kubernetes-ingress/" />
+    <updated>2021-05-02T19:50:31Z</updated>
+    <id>https://diomedet.com/eleventy-base-blog/posts/expose-an-external-resource-with-a-kubernetes-ingress/</id>
+    <content type="html">&lt;p&gt;The other night I was wandering around my homelab and noticed that I didn&#39;t correctly expose my new home assistant instance to the internet. Some months ago, home assistant (from now on HA) found its new permanent home, a Rasperry PI 4 4GB; since we&#39;re in lockdown, I didn&#39;t need to reach HA outside my local network.&lt;/p&gt;
+&lt;p&gt;I&#39;m still working from home (and love it), but it&#39;s time to fix this now. While choosing which method was the best to expose it, I had an idea, why not use an Ingress in my Kubernetes cluster?&lt;/p&gt;
+&lt;p&gt;It could seem a little odd, but hear me out:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I already have a Kubernetes cluster, with &lt;a href=&quot;https://cert-manager.io/docs/&quot;&gt;cert-manager&lt;/a&gt; configured and working&lt;/li&gt;
+&lt;li&gt;I&#39;m planning to move some service into the cluster, and they&#39;ll need to reach HA anyway&lt;/li&gt;
+&lt;li&gt;I want to learn as much as I can about Kubernetes, and this seemed a good chance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So, to achieve my goal, I need one thing: how can I point a Kubernetes Service to an external resource?&lt;/p&gt;
+&lt;p&gt;Wait, why a Service? Didn&#39;t you mention an Ingress before? Yes, you&#39;re right but bear with me.&lt;/p&gt;
+&lt;p&gt;In Kubernetes, an Ingress needs a Service to redirect all the requests it receives, so to properly expose HA with an Ingress, we need to create a Service that can point to it.&lt;/p&gt;
+&lt;p&gt;Usually, a Service is used to expose a set of Pods; in this way, if different applications need to talk to each other, they don&#39;t need to use their pod names (that could change variously), but they can use the Service name.&lt;/p&gt;
+&lt;p&gt;When we create a Service, another resource is automatically created, an Endpoint. This Endpoint includes the references (all the IP addresses) of the Pods that match the selector we&#39;ve specified in the Service selector spec.&lt;/p&gt;
+&lt;p&gt;The Endpoint created in this way will have the same name as the Service we&#39;ve created.&lt;/p&gt;
+&lt;p&gt;But here&#39;s the thing, we can create a Service without a selector, and if we do that, we also need to create an Endpoint ourselves, and this Endpoint could point to an IP outside the Kubernetes cluster.&lt;/p&gt;
+&lt;p&gt;So let&#39;s see the YAML we need to create to expose HA using a Kubernetes Ingress.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;endpoint.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Endpoints
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant
+&lt;span class=&quot;token key atrule&quot;&gt;subsets&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;addresses&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;ip&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; 1.1.1.1 &lt;span class=&quot;token comment&quot;&gt;# Insert your home-assistant IP here&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ha
+    &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8123&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; TCP&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;service.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; v1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Service
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;ports&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ha
+    &lt;span class=&quot;token key atrule&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;80&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; TCP
+    &lt;span class=&quot;token key atrule&quot;&gt;targetPort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;8123&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ClusterIP
+  &lt;span class=&quot;token key atrule&quot;&gt;clusterIP&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; None&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: we set the &lt;code&gt;clusterIP&lt;/code&gt; property to &lt;code&gt;None&lt;/code&gt; on purpose; this tells Kubernetes not to provide an IP to this Service; we don&#39;t need it. A Service like this is also known as headless Service.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;ingress.yml&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;apiVersion&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; networking.k8s.io/v1beta1
+&lt;span class=&quot;token key atrule&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Ingress
+&lt;span class=&quot;token key atrule&quot;&gt;metadata&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;annotations&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;kubernetes.io/ingress.class&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; nginx
+    &lt;span class=&quot;token key atrule&quot;&gt;cert-manager.io/cluster-issuer&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;letsencrypt-prod&quot;&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant
+&lt;span class=&quot;token key atrule&quot;&gt;spec&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token key atrule&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ha.awesome&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;domain.com &lt;span class=&quot;token comment&quot;&gt;# insert your domain here&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token key atrule&quot;&gt;paths&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;token key atrule&quot;&gt;serviceName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant
+          &lt;span class=&quot;token key atrule&quot;&gt;servicePort&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; ha
+        &lt;span class=&quot;token key atrule&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; /
+  &lt;span class=&quot;token key atrule&quot;&gt;tls&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;token key atrule&quot;&gt;hosts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt; ha.awesome&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;domain.com &lt;span class=&quot;token comment&quot;&gt;# insert your domain here&lt;/span&gt;
+    &lt;span class=&quot;token key atrule&quot;&gt;secretName&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; home&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;assistant&lt;span class=&quot;token punctuation&quot;&gt;-&lt;/span&gt;tls&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, if we run &lt;code&gt;kubectl apply -f ...&lt;/code&gt; for all these three files after cert-manager has finished its work, we&#39;ll end with a domain with a valid certificate that points to our Home Assistant instance outside of Kubernetes.&lt;/p&gt;
+&lt;p&gt;And remember that I told you that I want to move some service that uses HA inside my k8s cluster? Now, all I have to do is deploy them and use `home-assistant as the URL for HA instead of using the IP address.&lt;/p&gt;
+&lt;p&gt;For the sake of completion, if you already have a local domain for your HA instance, you can skip the creation of the Endpoint and use the &lt;a href=&quot;https://kubernetes.io/docs/concepts/services-networking/service/#externalname&quot;&gt;Service&#39;s &lt;code&gt;externalName&lt;/code&gt; property&lt;/a&gt; directly.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

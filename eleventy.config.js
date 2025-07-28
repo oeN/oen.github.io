@@ -73,7 +73,7 @@ export default async function(eleventyConfig) {
 		metadata: {
 			language: "en",
 			title: "Diomede T. Blog",
-			subtitle: "Sometimes I write something good",
+			subtitle: "My dusty corner of the interconnected world",
 			base: "https://diomedet.com/",
 			author: {
 				name: "Diomede Tripicchio"
@@ -111,9 +111,6 @@ export default async function(eleventyConfig) {
 		// selector: "h1,h2,h3,h4,h5,h6", // default
 	});
 
-	eleventyConfig.addShortcode("currentBuildDate", () => {
-		return (new Date()).toISOString();
-	});
 
 	// Features to make your build faster (when you need them)
 

@@ -23,7 +23,7 @@ So, if there is a way to make **external-dns** updates that list, what I'm tryin
 
 Messing around with the interface of Pi-hole, I've noticed that under "Settings -> DNS" you can choose which DNS server redirects all the incoming requests that the blacklist has not blocked. Besides the classic list of "Upstream DNS Servers" there is also a list of custom upstream DNS servers:
 
-![Pi-hole DNS Settings](/imgs/posts/kubernetes-external-dns-pihole/pihole-dns.png)
+![Pi-hole DNS Settings](./pihole-dns.png)
 
 So, the idea is to create a custom DNS server that can be updated by **external-dns** and used by Pi-hole as an **upstream DNS server**. In this way, every Ingress with my internal domain will be resolved to the IP of my Kubernetes cluster.
 
@@ -414,7 +414,7 @@ This error appears because we still have to change the Pi-hole configurations.
 
 To configure Pi-hole, you need to return to DNS Setting tab `http://pihole.local/admin/settings.php?tab=dns`, uncheck all the "Upstream DNS Servers" and insert your custom one, in my case `10.10.5.123#300123` (the # is used to specify the port).
 
-![Pi-hole DNS Settings Updated](/imgs/posts/kubernetes-external-dns-pihole/pihole-dns-updated.png)
+![Pi-hole DNS Settings Updated](./pihole-dns-updated.png)
 
 Now, if you run the `nslookup` command again, you should end with the correct result:
 
